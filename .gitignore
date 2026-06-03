@@ -1,2 +1,22 @@
+# Flutter / Dart
+.dart_tool/
+.flutter-plugins
+.flutter-plugins-dependencies
+build/
+.pub-cache/
+.pub/
+
+# IDE / OS
+.idea/
+*.iml
+.DS_Store
+
+# Tooling artifacts
 .superpowers/
-docs/
+.playwright-mcp/
+
+# Kept intentionally TRACKED (do NOT add here):
+#   pubspec.lock          - apps should commit their lockfile
+#   .metadata             - Flutter project metadata
+#   docs/                 - design specs + game_ideas.md (your roadmap)
+#   assets/               - real content, including assets/images/original_images/ (source art)
