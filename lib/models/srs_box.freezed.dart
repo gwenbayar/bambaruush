@@ -20,7 +20,8 @@ SrsBox _$SrsBoxFromJson(Map<String, dynamic> json) {
 
 /// @nodoc
 mixin _$SrsBox {
-  String get wordId => throw _privateConstructorUsedError;
+  String get itemId => throw _privateConstructorUsedError;
+  ItemType get itemType => throw _privateConstructorUsedError;
   int get level => throw _privateConstructorUsedError;
   DateTime get nextReviewAt => throw _privateConstructorUsedError;
   int get correctStreak => throw _privateConstructorUsedError;
@@ -40,7 +41,11 @@ abstract class $SrsBoxCopyWith<$Res> {
       _$SrsBoxCopyWithImpl<$Res, SrsBox>;
   @useResult
   $Res call(
-      {String wordId, int level, DateTime nextReviewAt, int correctStreak});
+      {String itemId,
+      ItemType itemType,
+      int level,
+      DateTime nextReviewAt,
+      int correctStreak});
 }
 
 /// @nodoc
@@ -58,16 +63,21 @@ class _$SrsBoxCopyWithImpl<$Res, $Val extends SrsBox>
   @pragma('vm:prefer-inline')
   @override
   $Res call({
-    Object? wordId = null,
+    Object? itemId = null,
+    Object? itemType = null,
     Object? level = null,
     Object? nextReviewAt = null,
     Object? correctStreak = null,
   }) {
     return _then(_value.copyWith(
-      wordId: null == wordId
-          ? _value.wordId
-          : wordId // ignore: cast_nullable_to_non_nullable
+      itemId: null == itemId
+          ? _value.itemId
+          : itemId // ignore: cast_nullable_to_non_nullable
               as String,
+      itemType: null == itemType
+          ? _value.itemType
+          : itemType // ignore: cast_nullable_to_non_nullable
+              as ItemType,
       level: null == level
           ? _value.level
           : level // ignore: cast_nullable_to_non_nullable
@@ -92,7 +102,11 @@ abstract class _$$SrsBoxImplCopyWith<$Res> implements $SrsBoxCopyWith<$Res> {
   @override
   @useResult
   $Res call(
-      {String wordId, int level, DateTime nextReviewAt, int correctStreak});
+      {String itemId,
+      ItemType itemType,
+      int level,
+      DateTime nextReviewAt,
+      int correctStreak});
 }
 
 /// @nodoc
@@ -108,16 +122,21 @@ class __$$SrsBoxImplCopyWithImpl<$Res>
   @pragma('vm:prefer-inline')
   @override
   $Res call({
-    Object? wordId = null,
+    Object? itemId = null,
+    Object? itemType = null,
     Object? level = null,
     Object? nextReviewAt = null,
     Object? correctStreak = null,
   }) {
     return _then(_$SrsBoxImpl(
-      wordId: null == wordId
-          ? _value.wordId
-          : wordId // ignore: cast_nullable_to_non_nullable
+      itemId: null == itemId
+          ? _value.itemId
+          : itemId // ignore: cast_nullable_to_non_nullable
               as String,
+      itemType: null == itemType
+          ? _value.itemType
+          : itemType // ignore: cast_nullable_to_non_nullable
+              as ItemType,
       level: null == level
           ? _value.level
           : level // ignore: cast_nullable_to_non_nullable
@@ -138,7 +157,8 @@ class __$$SrsBoxImplCopyWithImpl<$Res>
 @JsonSerializable()
 class _$SrsBoxImpl implements _SrsBox {
   const _$SrsBoxImpl(
-      {required this.wordId,
+      {required this.itemId,
+      required this.itemType,
       required this.level,
       required this.nextReviewAt,
       required this.correctStreak});
@@ -147,7 +167,9 @@ class _$SrsBoxImpl implements _SrsBox {
       _$$SrsBoxImplFromJson(json);
 
   @override
-  final String wordId;
+  final String itemId;
+  @override
+  final ItemType itemType;
   @override
   final int level;
   @override
@@ -157,7 +179,7 @@ class _$SrsBoxImpl implements _SrsBox {
 
   @override
   String toString() {
-    return 'SrsBox(wordId: $wordId, level: $level, nextReviewAt: $nextReviewAt, correctStreak: $correctStreak)';
+    return 'SrsBox(itemId: $itemId, itemType: $itemType, level: $level, nextReviewAt: $nextReviewAt, correctStreak: $correctStreak)';
   }
 
   @override
@@ -165,7 +187,9 @@ class _$SrsBoxImpl implements _SrsBox {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
             other is _$SrsBoxImpl &&
-            (identical(other.wordId, wordId) || other.wordId == wordId) &&
+            (identical(other.itemId, itemId) || other.itemId == itemId) &&
+            (identical(other.itemType, itemType) ||
+                other.itemType == itemType) &&
             (identical(other.level, level) || other.level == level) &&
             (identical(other.nextReviewAt, nextReviewAt) ||
                 other.nextReviewAt == nextReviewAt) &&
@@ -175,8 +199,8 @@ class _$SrsBoxImpl implements _SrsBox {
 
   @JsonKey(includeFromJson: false, includeToJson: false)
   @override
-  int get hashCode =>
-      Object.hash(runtimeType, wordId, level, nextReviewAt, correctStreak);
+  int get hashCode => Object.hash(
+      runtimeType, itemId, itemType, level, nextReviewAt, correctStreak);
 
   /// Create a copy of SrsBox
   /// with the given fields replaced by the non-null parameter values.
@@ -196,7 +220,8 @@ class _$SrsBoxImpl implements _SrsBox {
 
 abstract class _SrsBox implements SrsBox {
   const factory _SrsBox(
-      {required final String wordId,
+      {required final String itemId,
+      required final ItemType itemType,
       required final int level,
       required final DateTime nextReviewAt,
       required final int correctStreak}) = _$SrsBoxImpl;
@@ -204,7 +229,9 @@ abstract class _SrsBox implements SrsBox {
   factory _SrsBox.fromJson(Map<String, dynamic> json) = _$SrsBoxImpl.fromJson;
 
   @override
-  String get wordId;
+  String get itemId;
+  @override
+  ItemType get itemType;
   @override
   int get level;
   @override

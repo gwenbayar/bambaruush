@@ -7,7 +7,8 @@ part of 'srs_box.dart';
 // **************************************************************************
 
 _$SrsBoxImpl _$$SrsBoxImplFromJson(Map<String, dynamic> json) => _$SrsBoxImpl(
-      wordId: json['wordId'] as String,
+      itemId: json['itemId'] as String,
+      itemType: $enumDecode(_$ItemTypeEnumMap, json['itemType']),
       level: (json['level'] as num).toInt(),
       nextReviewAt: DateTime.parse(json['nextReviewAt'] as String),
       correctStreak: (json['correctStreak'] as num).toInt(),
@@ -15,8 +16,14 @@ _$SrsBoxImpl _$$SrsBoxImplFromJson(Map<String, dynamic> json) => _$SrsBoxImpl(
 
 Map<String, dynamic> _$$SrsBoxImplToJson(_$SrsBoxImpl instance) =>
     <String, dynamic>{
-      'wordId': instance.wordId,
+      'itemId': instance.itemId,
+      'itemType': _$ItemTypeEnumMap[instance.itemType]!,
       'level': instance.level,
       'nextReviewAt': instance.nextReviewAt.toIso8601String(),
       'correctStreak': instance.correctStreak,
     };
+
+const _$ItemTypeEnumMap = {
+  ItemType.word: 'word',
+  ItemType.letter: 'letter',
+};

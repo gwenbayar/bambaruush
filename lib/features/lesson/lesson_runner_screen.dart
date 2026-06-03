@@ -3,7 +3,6 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 
 import '../../core/providers.dart';
-import '../../core/srs/leitner_engine.dart';
 import '../../models/lesson.dart';
 import '../../models/lesson_progress.dart';
 import '../mascot/mascot_overlay.dart';
@@ -14,6 +13,7 @@ import 'listen_activity.dart';
 import 'read_activity.dart';
 import 'reward_activity.dart';
 import 'session_runner.dart';
+import 'srs_update.dart';
 import 'trace_activity.dart';
 
 final lessonRunnerProvider = StateNotifierProvider.autoDispose
@@ -143,14 +143,11 @@ class LessonRunnerScreen extends ConsumerWidget {
     final content = ref.read(contentRepositoryProvider);
     final now = DateTime.now();
 
-    final newSrs = {...progress.srsByWord};
-    for (final wid in lesson.wordIds) {
-      final correct = s.wordCorrectness[wid] ?? false;
-      final existing = newSrs[wid] ?? LeitnerEngine.initial(wid, now);
-      newSrs[wid] = correct
-          ? LeitnerEngine.onCorrect(existing, now)
-          : LeitnerEngine.onWrong(existing, now);
-    }
+    final newSrs = applySessionToSrs(
+      current: progress.srsByItem,
+      itemCorrectness: s.itemCorrectness,
+      now: now,
+    );
 
     final newLessons = {...progress.lessons};
     newLessons[lesson.id] = LessonProgress(
@@ -176,7 +173,7 @@ class LessonRunnerScreen extends ConsumerWidget {
     await progressCtrl.update(
       progress.copyWith(
         lessons: newLessons,
-        srsByWord: newSrs,
+        srsByItem: newSrs,
         earnedStickerIds: {...progress.earnedStickerIds, lesson.stickerId},
         lastPlayed: now,
       ),

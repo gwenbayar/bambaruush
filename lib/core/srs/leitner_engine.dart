@@ -1,3 +1,4 @@
+import '../../models/item.dart';
 import '../../models/srs_box.dart';
 
 class LeitnerEngine {
@@ -9,8 +10,9 @@ class LeitnerEngine {
     5: Duration(days: 30),
   };
 
-  static SrsBox initial(String wordId, DateTime now) => SrsBox(
-        wordId: wordId,
+  static SrsBox initial(String id, ItemType type, DateTime now) => SrsBox(
+        itemId: id,
+        itemType: type,
         level: 1,
         nextReviewAt: now,
         correctStreak: 0,
@@ -32,4 +34,8 @@ class LeitnerEngine {
       );
 
   static bool isDue(SrsBox box, DateTime now) => !now.isBefore(box.nextReviewAt);
+
+  /// All boxes that are due for review at [now].
+  static List<SrsBox> dueItems(Map<String, SrsBox> srsByItem, DateTime now) =>
+      srsByItem.values.where((b) => isDue(b, now)).toList();
 }

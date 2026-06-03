@@ -12,7 +12,7 @@ _$ProgressImpl _$$ProgressImplFromJson(Map<String, dynamic> json) =>
         (k, e) =>
             MapEntry(k, LessonProgress.fromJson(e as Map<String, dynamic>)),
       ),
-      srsByWord: (json['srsByWord'] as Map<String, dynamic>).map(
+      srsByItem: (json['srsByItem'] as Map<String, dynamic>).map(
         (k, e) => MapEntry(k, SrsBox.fromJson(e as Map<String, dynamic>)),
       ),
       earnedStickerIds: (json['earnedStickerIds'] as List<dynamic>)
@@ -26,7 +26,7 @@ _$ProgressImpl _$$ProgressImplFromJson(Map<String, dynamic> json) =>
 Map<String, dynamic> _$$ProgressImplToJson(_$ProgressImpl instance) =>
     <String, dynamic>{
       'lessons': instance.lessons,
-      'srsByWord': instance.srsByWord,
+      'srsByItem': instance.srsByItem,
       'earnedStickerIds': instance.earnedStickerIds.toList(),
       'schemaVersion': instance.schemaVersion,
       'lastPlayed': instance.lastPlayed.toIso8601String(),

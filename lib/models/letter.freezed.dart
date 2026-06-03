@@ -155,13 +155,14 @@ class __$$LetterImplCopyWithImpl<$Res>
 
 /// @nodoc
 @JsonSerializable()
-class _$LetterImpl implements _Letter {
+class _$LetterImpl extends _Letter {
   const _$LetterImpl(
       {required this.id,
       required this.cyrillic,
       required this.romanization,
       required this.audioAssetPath,
-      required this.traceTemplatePath});
+      required this.traceTemplatePath})
+      : super._();
 
   factory _$LetterImpl.fromJson(Map<String, dynamic> json) =>
       _$$LetterImplFromJson(json);
@@ -219,13 +220,14 @@ class _$LetterImpl implements _Letter {
   }
 }
 
-abstract class _Letter implements Letter {
+abstract class _Letter extends Letter {
   const factory _Letter(
       {required final String id,
       required final String cyrillic,
       required final String romanization,
       required final String audioAssetPath,
       required final String traceTemplatePath}) = _$LetterImpl;
+  const _Letter._() : super._();
 
   factory _Letter.fromJson(Map<String, dynamic> json) = _$LetterImpl.fromJson;
 
