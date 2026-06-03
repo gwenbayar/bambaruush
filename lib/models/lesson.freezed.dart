@@ -23,6 +23,7 @@ mixin _$Lesson {
   String get id => throw _privateConstructorUsedError;
   int get order => throw _privateConstructorUsedError;
   String? get title => throw _privateConstructorUsedError;
+  LessonKind get kind => throw _privateConstructorUsedError;
   String get regionId => throw _privateConstructorUsedError;
   List<String> get letterIds => throw _privateConstructorUsedError;
   List<String> get wordIds => throw _privateConstructorUsedError;
@@ -46,6 +47,7 @@ abstract class $LessonCopyWith<$Res> {
       {String id,
       int order,
       String? title,
+      LessonKind kind,
       String regionId,
       List<String> letterIds,
       List<String> wordIds,
@@ -70,6 +72,7 @@ class _$LessonCopyWithImpl<$Res, $Val extends Lesson>
     Object? id = null,
     Object? order = null,
     Object? title = freezed,
+    Object? kind = null,
     Object? regionId = null,
     Object? letterIds = null,
     Object? wordIds = null,
@@ -88,6 +91,10 @@ class _$LessonCopyWithImpl<$Res, $Val extends Lesson>
           ? _value.title
           : title // ignore: cast_nullable_to_non_nullable
               as String?,
+      kind: null == kind
+          ? _value.kind
+          : kind // ignore: cast_nullable_to_non_nullable
+              as LessonKind,
       regionId: null == regionId
           ? _value.regionId
           : regionId // ignore: cast_nullable_to_non_nullable
@@ -119,6 +126,7 @@ abstract class _$$LessonImplCopyWith<$Res> implements $LessonCopyWith<$Res> {
       {String id,
       int order,
       String? title,
+      LessonKind kind,
       String regionId,
       List<String> letterIds,
       List<String> wordIds,
@@ -141,6 +149,7 @@ class __$$LessonImplCopyWithImpl<$Res>
     Object? id = null,
     Object? order = null,
     Object? title = freezed,
+    Object? kind = null,
     Object? regionId = null,
     Object? letterIds = null,
     Object? wordIds = null,
@@ -159,6 +168,10 @@ class __$$LessonImplCopyWithImpl<$Res>
           ? _value.title
           : title // ignore: cast_nullable_to_non_nullable
               as String?,
+      kind: null == kind
+          ? _value.kind
+          : kind // ignore: cast_nullable_to_non_nullable
+              as LessonKind,
       regionId: null == regionId
           ? _value.regionId
           : regionId // ignore: cast_nullable_to_non_nullable
@@ -186,6 +199,7 @@ class _$LessonImpl implements _Lesson {
       {required this.id,
       required this.order,
       this.title,
+      this.kind = LessonKind.letter,
       required this.regionId,
       required final List<String> letterIds,
       required final List<String> wordIds,
@@ -202,6 +216,9 @@ class _$LessonImpl implements _Lesson {
   final int order;
   @override
   final String? title;
+  @override
+  @JsonKey()
+  final LessonKind kind;
   @override
   final String regionId;
   final List<String> _letterIds;
@@ -225,7 +242,7 @@ class _$LessonImpl implements _Lesson {
 
   @override
   String toString() {
-    return 'Lesson(id: $id, order: $order, title: $title, regionId: $regionId, letterIds: $letterIds, wordIds: $wordIds, stickerId: $stickerId)';
+    return 'Lesson(id: $id, order: $order, title: $title, kind: $kind, regionId: $regionId, letterIds: $letterIds, wordIds: $wordIds, stickerId: $stickerId)';
   }
 
   @override
@@ -236,6 +253,7 @@ class _$LessonImpl implements _Lesson {
             (identical(other.id, id) || other.id == id) &&
             (identical(other.order, order) || other.order == order) &&
             (identical(other.title, title) || other.title == title) &&
+            (identical(other.kind, kind) || other.kind == kind) &&
             (identical(other.regionId, regionId) ||
                 other.regionId == regionId) &&
             const DeepCollectionEquality()
@@ -252,6 +270,7 @@ class _$LessonImpl implements _Lesson {
       id,
       order,
       title,
+      kind,
       regionId,
       const DeepCollectionEquality().hash(_letterIds),
       const DeepCollectionEquality().hash(_wordIds),
@@ -278,6 +297,7 @@ abstract class _Lesson implements Lesson {
       {required final String id,
       required final int order,
       final String? title,
+      final LessonKind kind,
       required final String regionId,
       required final List<String> letterIds,
       required final List<String> wordIds,
@@ -291,6 +311,8 @@ abstract class _Lesson implements Lesson {
   int get order;
   @override
   String? get title;
+  @override
+  LessonKind get kind;
   @override
   String get regionId;
   @override

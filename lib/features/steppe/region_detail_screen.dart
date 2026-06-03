@@ -36,10 +36,16 @@ class RegionDetailScreen extends ConsumerWidget {
               final wordsPreview = lesson.wordIds
                   .map((w) => content.wordById(w).english)
                   .join(' · ');
+              final isVocab = lesson.kind == LessonKind.vocabulary ||
+                  lesson.letterIds.isEmpty;
               return _LessonTile(
                 lesson: lesson,
-                letterCyrillic:
-                    content.letterById(lesson.letterIds.first).cyrillic,
+                letterCyrillic: isVocab
+                    ? null
+                    : content.letterById(lesson.letterIds.first).cyrillic,
+                thumbnailAsset: isVocab
+                    ? content.stickerById(lesson.stickerId).imageAssetPath
+                    : null,
                 wordsPreview: wordsPreview,
                 unlocked: unlocked,
                 completed: completed,
@@ -66,13 +72,15 @@ class _LessonTile extends StatelessWidget {
   const _LessonTile({
     required this.lesson,
     required this.letterCyrillic,
+    required this.thumbnailAsset,
     required this.wordsPreview,
     required this.unlocked,
     required this.completed,
     required this.onTap,
   });
   final Lesson lesson;
-  final String letterCyrillic;
+  final String? letterCyrillic;
+  final String? thumbnailAsset;
   final String wordsPreview;
   final bool unlocked;
   final bool completed;
@@ -97,6 +105,7 @@ class _LessonTile extends StatelessWidget {
           children: [
             _Avatar(
               letterCyrillic: letterCyrillic,
+              thumbnailAsset: thumbnailAsset,
               unlocked: unlocked,
               completed: completed,
             ),
@@ -148,10 +157,12 @@ class _LessonTile extends StatelessWidget {
 class _Avatar extends StatelessWidget {
   const _Avatar({
     required this.letterCyrillic,
+    required this.thumbnailAsset,
     required this.unlocked,
     required this.completed,
   });
-  final String letterCyrillic;
+  final String? letterCyrillic;
+  final String? thumbnailAsset;
   final bool unlocked;
   final bool completed;
 
@@ -166,6 +177,36 @@ class _Avatar extends StatelessWidget {
       background = AppColors.sun;
     }
 
+    Widget content;
+    if (!unlocked) {
+      content = const Icon(Icons.lock_rounded, color: Colors.white, size: 28);
+    } else if (letterCyrillic != null) {
+      content = Text(
+        letterCyrillic!,
+        style: const TextStyle(
+          fontFamily: AppFonts.learning,
+          fontWeight: FontWeight.bold,
+          fontSize: 28,
+          color: Colors.white,
+        ),
+      );
+    } else {
+      content = ClipRRect(
+        borderRadius: BorderRadius.circular(12),
+        child: Image.asset(
+          thumbnailAsset!,
+          width: 48,
+          height: 48,
+          fit: BoxFit.cover,
+          errorBuilder: (_, __, ___) => const Icon(
+            Icons.menu_book_rounded,
+            color: Colors.white,
+            size: 28,
+          ),
+        ),
+      );
+    }
+
     return Container(
       width: 56,
       height: 56,
@@ -174,18 +215,7 @@ class _Avatar extends StatelessWidget {
         borderRadius: BorderRadius.circular(16),
       ),
       alignment: Alignment.center,
-      child: unlocked
-          ? Text(
-              letterCyrillic,
-              style: const TextStyle(
-                // Cyrillic glyph: must use the learning font.
-                fontFamily: AppFonts.learning,
-                fontWeight: FontWeight.bold,
-                fontSize: 28,
-                color: Colors.white,
-              ),
-            )
-          : const Icon(Icons.lock_rounded, color: Colors.white, size: 28),
+      child: content,
     );
   }
 }

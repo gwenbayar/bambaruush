@@ -7,17 +7,17 @@ import '../../theme/app_theme.dart';
 import '../../widgets/candy_button.dart';
 import '../../widgets/confetti_burst.dart';
 import '../mascot/mascot_controller.dart';
-import 'lesson_runner.dart';
+import 'activity_spec.dart';
 
-class RewardStageWidget extends ConsumerStatefulWidget {
-  const RewardStageWidget({super.key, required this.stage, required this.onContinue});
-  final RewardStage stage;
+class RewardActivityView extends ConsumerStatefulWidget {
+  const RewardActivityView({super.key, required this.spec, required this.onContinue});
+  final RewardSpec spec;
   final VoidCallback onContinue;
   @override
-  ConsumerState<RewardStageWidget> createState() => _RewardStageWidgetState();
+  ConsumerState<RewardActivityView> createState() => _RewardActivityViewState();
 }
 
-class _RewardStageWidgetState extends ConsumerState<RewardStageWidget> {
+class _RewardActivityViewState extends ConsumerState<RewardActivityView> {
   @override
   void initState() {
     super.initState();
@@ -28,7 +28,7 @@ class _RewardStageWidgetState extends ConsumerState<RewardStageWidget> {
 
   @override
   Widget build(BuildContext context) {
-    final sticker = ref.watch(contentRepositoryProvider).stickerById(widget.stage.stickerId);
+    final sticker = ref.watch(contentRepositoryProvider).stickerById(widget.spec.stickerId);
     return Stack(
       children: [
         // Celebration confetti behind the content. IgnorePointer keeps taps

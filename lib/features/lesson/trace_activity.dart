@@ -7,22 +7,22 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import '../../core/providers.dart';
 import '../mascot/mascot_controller.dart';
-import 'lesson_runner.dart';
+import 'activity_spec.dart';
 import 'trace_evaluator.dart';
 
-class TraceStageWidget extends ConsumerStatefulWidget {
-  const TraceStageWidget({
+class TraceActivityView extends ConsumerStatefulWidget {
+  const TraceActivityView({
     super.key,
-    required this.stage,
+    required this.spec,
     required this.onResult,
   });
-  final TraceStage stage;
+  final TraceSpec spec;
   final void Function({required bool correct}) onResult;
   @override
-  ConsumerState<TraceStageWidget> createState() => _TraceStageWidgetState();
+  ConsumerState<TraceActivityView> createState() => _TraceActivityViewState();
 }
 
-class _TraceStageWidgetState extends ConsumerState<TraceStageWidget> {
+class _TraceActivityViewState extends ConsumerState<TraceActivityView> {
   final List<List<Offset>> _strokes = [];
   final GlobalKey _canvasKey = GlobalKey();
   Timer? _idleTimer;
@@ -44,7 +44,7 @@ class _TraceStageWidgetState extends ConsumerState<TraceStageWidget> {
   Future<void> _finishAttempt() async {
     if (_evaluating) return;
     _evaluating = true;
-    final letter = ref.read(contentRepositoryProvider).letterById(widget.stage.letterId);
+    final letter = ref.read(contentRepositoryProvider).letterById(widget.spec.letterId);
     final box = _canvasKey.currentContext?.findRenderObject() as RenderBox?;
     final canvasSize = box?.size ?? Size(_evalSize.toDouble(), _evalSize.toDouble());
     final pass = await _evaluate(letter.cyrillic, canvasSize);
@@ -141,7 +141,7 @@ class _TraceStageWidgetState extends ConsumerState<TraceStageWidget> {
 
   @override
   Widget build(BuildContext context) {
-    final letter = ref.watch(contentRepositoryProvider).letterById(widget.stage.letterId);
+    final letter = ref.watch(contentRepositoryProvider).letterById(widget.spec.letterId);
     return Padding(
       padding: const EdgeInsets.all(24),
       child: Column(

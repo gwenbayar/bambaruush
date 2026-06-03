@@ -19,9 +19,9 @@
     { "id": "word_bar", "cyrillic": "Бар", "english": "tiger", "audio": "word_bar.mp3", "image": "word_bar.png", "letterIds": ["letter_b"] }
   ],
   "lessons": [
-    { "id": "lesson_family", "order": 1, "title": "My Family", "regionId": "region_yurt", "letterIds": ["letter_a"], "wordIds": ["word_aav", "word_eej", "word_akh", "word_egch", "word_duu"], "stickerId": "sticker_family" },
-    { "id": "lesson_a", "order": 2, "title": "Letter А", "regionId": "region_yurt", "letterIds": ["letter_a"], "wordIds": ["word_aav", "word_akh"], "stickerId": "sticker_a" },
-    { "id": "lesson_b", "order": 3, "title": "Letter Б", "regionId": "region_yurt", "letterIds": ["letter_b"], "wordIds": ["word_bombog", "word_bar"], "stickerId": "sticker_ball" }
+    { "id": "lesson_family", "order": 1, "title": "My Family", "kind": "vocabulary", "regionId": "region_yurt", "letterIds": [], "wordIds": ["word_aav", "word_eej", "word_akh", "word_egch", "word_duu"], "stickerId": "sticker_family" },
+    { "id": "lesson_a", "order": 2, "title": "Letter А", "kind": "letter", "regionId": "region_yurt", "letterIds": ["letter_a"], "wordIds": ["word_aav", "word_akh"], "stickerId": "sticker_a" },
+    { "id": "lesson_b", "order": 3, "title": "Letter Б", "kind": "letter", "regionId": "region_yurt", "letterIds": ["letter_b"], "wordIds": ["word_bombog", "word_bar"], "stickerId": "sticker_ball" }
   ],
   "stickers": [
     { "id": "sticker_family", "lessonId": "lesson_family", "image": "sticker_family.png", "nameEn": "Bear Family" },
