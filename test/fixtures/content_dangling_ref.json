@@ -1,0 +1,95 @@
+{
+  "schemaVersion": 1,
+  "regions": [
+    {
+      "id": "region_yurt",
+      "nameEn": "The Yurt",
+      "nameMn": "Гэр",
+      "order": 1,
+      "mapImagePath": "region_yurt.png",
+      "mapPosition": [0.22, 0.62]
+    }
+  ],
+  "letters": [
+    {
+      "id": "letter_a",
+      "cyrillic": "А",
+      "romanization": "A",
+      "audio": "letter_a.mp3",
+      "traceMask": "letter_a.png"
+    },
+    {
+      "id": "letter_b",
+      "cyrillic": "Б",
+      "romanization": "B",
+      "audio": "letter_b.mp3",
+      "traceMask": "letter_b.png"
+    }
+  ],
+  "words": [
+    {
+      "id": "word_aav",
+      "cyrillic": "Аав",
+      "english": "father",
+      "audio": "word_aav.mp3",
+      "image": "word_aav.png",
+      "letterIds": ["letter_a"]
+    },
+    {
+      "id": "word_akh",
+      "cyrillic": "Ах",
+      "english": "older brother",
+      "audio": "word_akh.mp3",
+      "image": "word_akh.png",
+      "letterIds": ["letter_a"]
+    },
+    {
+      "id": "word_baavgai",
+      "cyrillic": "Баавгай",
+      "english": "bear",
+      "audio": "word_baavgai.mp3",
+      "image": "word_baavgai.png",
+      "letterIds": ["letter_b", "letter_a"]
+    },
+    {
+      "id": "word_bombog",
+      "cyrillic": "Бөмбөг",
+      "english": "ball",
+      "audio": "word_bombog.mp3",
+      "image": "word_bombog.png",
+      "letterIds": ["letter_b"]
+    }
+  ],
+  "lessons": [
+    {
+      "id": "lesson_01",
+      "order": 1,
+      "regionId": "region_yurt",
+      "letterIds": ["letter_a"],
+      "wordIds": ["word_aav", "word_akh"],
+      "stickerId": "sticker_missing"
+    },
+    {
+      "id": "lesson_02",
+      "order": 2,
+      "regionId": "region_yurt",
+      "letterIds": ["letter_b"],
+      "wordIds": ["word_baavgai", "word_bombog"],
+      "stickerId": "sticker_ball"
+    }
+  ],
+  "stickers": [
+    {
+      "id": "sticker_father_bear",
+      "lessonId": "lesson_01",
+      "image": "sticker_father_bear.png",
+      "nameEn": "Father Bear"
+    },
+    {
+      "id": "sticker_ball",
+      "lessonId": "lesson_02",
+      "image": "sticker_ball.png",
+      "nameEn": "Ball"
+    }
+  ]
+}

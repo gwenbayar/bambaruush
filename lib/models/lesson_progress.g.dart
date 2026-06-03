@@ -1,0 +1,28 @@
+// GENERATED CODE - DO NOT MODIFY BY HAND
+
+part of 'lesson_progress.dart';
+
+// **************************************************************************
+// JsonSerializableGenerator
+// **************************************************************************
+
+_$LessonProgressImpl _$$LessonProgressImplFromJson(Map<String, dynamic> json) =>
+    _$LessonProgressImpl(
+      lessonId: json['lessonId'] as String,
+      unlocked: json['unlocked'] as bool,
+      completed: json['completed'] as bool,
+      completionCount: (json['completionCount'] as num).toInt(),
+      completedAt: json['completedAt'] == null
+          ? null
+          : DateTime.parse(json['completedAt'] as String),
+    );
+
+Map<String, dynamic> _$$LessonProgressImplToJson(
+        _$LessonProgressImpl instance) =>
+    <String, dynamic>{
+      'lessonId': instance.lessonId,
+      'unlocked': instance.unlocked,
+      'completed': instance.completed,
+      'completionCount': instance.completionCount,
+      'completedAt': instance.completedAt?.toIso8601String(),
+    };

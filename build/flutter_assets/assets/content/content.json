@@ -1,0 +1,31 @@
+{
+  "schemaVersion": 1,
+  "regions": [
+    { "id": "region_yurt", "nameEn": "Ger", "nameMn": "Гэр", "order": 1, "mapImagePath": "region_yurt.png", "mapPosition": [0.5, 0.63] }
+  ],
+  "letters": [
+    { "id": "letter_a", "cyrillic": "А", "romanization": "A", "audio": "letter_a.mp3", "traceMask": "letter_a.png" },
+    { "id": "letter_b", "cyrillic": "Б", "romanization": "B", "audio": "letter_b.mp3", "traceMask": "letter_b.png" },
+    { "id": "letter_e", "cyrillic": "Э", "romanization": "E", "audio": "letter_e.mp3", "traceMask": "letter_e.png" },
+    { "id": "letter_d", "cyrillic": "Д", "romanization": "D", "audio": "letter_d.mp3", "traceMask": "letter_d.png" }
+  ],
+  "words": [
+    { "id": "word_aav", "cyrillic": "Аав", "english": "father", "audio": "word_aav.mp3", "image": "word_aav.png", "letterIds": ["letter_a"] },
+    { "id": "word_eej", "cyrillic": "Ээж", "english": "mother", "audio": "word_eej.mp3", "image": "word_eej.png", "letterIds": ["letter_e"] },
+    { "id": "word_akh", "cyrillic": "Ах", "english": "older brother", "audio": "word_akh.mp3", "image": "word_akh.png", "letterIds": ["letter_a"] },
+    { "id": "word_egch", "cyrillic": "Эгч", "english": "older sister", "audio": "word_egch.mp3", "image": "word_egch.png", "letterIds": ["letter_e"] },
+    { "id": "word_duu", "cyrillic": "Дүү", "english": "little sibling", "audio": "word_duu.mp3", "image": "word_duu.png", "letterIds": ["letter_d"] },
+    { "id": "word_bombog", "cyrillic": "Бөмбөг", "english": "ball", "audio": "word_bombog.mp3", "image": "word_bombog.png", "letterIds": ["letter_b"] },
+    { "id": "word_bar", "cyrillic": "Бар", "english": "tiger", "audio": "word_bar.mp3", "image": "word_bar.png", "letterIds": ["letter_b"] }
+  ],
+  "lessons": [
+    { "id": "lesson_family", "order": 1, "title": "My Family", "regionId": "region_yurt", "letterIds": ["letter_a"], "wordIds": ["word_aav", "word_eej", "word_akh", "word_egch", "word_duu"], "stickerId": "sticker_family" },
+    { "id": "lesson_a", "order": 2, "title": "Letter А", "regionId": "region_yurt", "letterIds": ["letter_a"], "wordIds": ["word_aav", "word_akh"], "stickerId": "sticker_a" },
+    { "id": "lesson_b", "order": 3, "title": "Letter Б", "regionId": "region_yurt", "letterIds": ["letter_b"], "wordIds": ["word_bombog", "word_bar"], "stickerId": "sticker_ball" }
+  ],
+  "stickers": [
+    { "id": "sticker_family", "lessonId": "lesson_family", "image": "sticker_family.png", "nameEn": "Bear Family" },
+    { "id": "sticker_a", "lessonId": "lesson_a", "image": "sticker_a.png", "nameEn": "Big Brother" },
+    { "id": "sticker_ball", "lessonId": "lesson_b", "image": "sticker_ball.png", "nameEn": "Ball" }
+  ]
+}
