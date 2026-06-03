@@ -21,11 +21,10 @@ Word _$WordFromJson(Map<String, dynamic> json) {
 /// @nodoc
 mixin _$Word {
   String get id => throw _privateConstructorUsedError;
-  String get cyrillic => throw _privateConstructorUsedError;
-  String get english => throw _privateConstructorUsedError;
-  String get audioAssetPath => throw _privateConstructorUsedError;
   String get imageAssetPath => throw _privateConstructorUsedError;
   List<String> get letterIds => throw _privateConstructorUsedError;
+  Map<String, WordLocalization> get localizations =>
+      throw _privateConstructorUsedError;
 
   /// Serializes this Word to a JSON map.
   Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
@@ -43,11 +42,9 @@ abstract class $WordCopyWith<$Res> {
   @useResult
   $Res call(
       {String id,
-      String cyrillic,
-      String english,
-      String audioAssetPath,
       String imageAssetPath,
-      List<String> letterIds});
+      List<String> letterIds,
+      Map<String, WordLocalization> localizations});
 }
 
 /// @nodoc
@@ -66,28 +63,14 @@ class _$WordCopyWithImpl<$Res, $Val extends Word>
   @override
   $Res call({
     Object? id = null,
-    Object? cyrillic = null,
-    Object? english = null,
-    Object? audioAssetPath = null,
     Object? imageAssetPath = null,
     Object? letterIds = null,
+    Object? localizations = null,
   }) {
     return _then(_value.copyWith(
       id: null == id
           ? _value.id
           : id // ignore: cast_nullable_to_non_nullable
-              as String,
-      cyrillic: null == cyrillic
-          ? _value.cyrillic
-          : cyrillic // ignore: cast_nullable_to_non_nullable
-              as String,
-      english: null == english
-          ? _value.english
-          : english // ignore: cast_nullable_to_non_nullable
-              as String,
-      audioAssetPath: null == audioAssetPath
-          ? _value.audioAssetPath
-          : audioAssetPath // ignore: cast_nullable_to_non_nullable
               as String,
       imageAssetPath: null == imageAssetPath
           ? _value.imageAssetPath
@@ -97,6 +80,10 @@ class _$WordCopyWithImpl<$Res, $Val extends Word>
           ? _value.letterIds
           : letterIds // ignore: cast_nullable_to_non_nullable
               as List<String>,
+      localizations: null == localizations
+          ? _value.localizations
+          : localizations // ignore: cast_nullable_to_non_nullable
+              as Map<String, WordLocalization>,
     ) as $Val);
   }
 }
@@ -110,11 +97,9 @@ abstract class _$$WordImplCopyWith<$Res> implements $WordCopyWith<$Res> {
   @useResult
   $Res call(
       {String id,
-      String cyrillic,
-      String english,
-      String audioAssetPath,
       String imageAssetPath,
-      List<String> letterIds});
+      List<String> letterIds,
+      Map<String, WordLocalization> localizations});
 }
 
 /// @nodoc
@@ -130,28 +115,14 @@ class __$$WordImplCopyWithImpl<$Res>
   @override
   $Res call({
     Object? id = null,
-    Object? cyrillic = null,
-    Object? english = null,
-    Object? audioAssetPath = null,
     Object? imageAssetPath = null,
     Object? letterIds = null,
+    Object? localizations = null,
   }) {
     return _then(_$WordImpl(
       id: null == id
           ? _value.id
           : id // ignore: cast_nullable_to_non_nullable
-              as String,
-      cyrillic: null == cyrillic
-          ? _value.cyrillic
-          : cyrillic // ignore: cast_nullable_to_non_nullable
-              as String,
-      english: null == english
-          ? _value.english
-          : english // ignore: cast_nullable_to_non_nullable
-              as String,
-      audioAssetPath: null == audioAssetPath
-          ? _value.audioAssetPath
-          : audioAssetPath // ignore: cast_nullable_to_non_nullable
               as String,
       imageAssetPath: null == imageAssetPath
           ? _value.imageAssetPath
@@ -161,33 +132,31 @@ class __$$WordImplCopyWithImpl<$Res>
           ? _value._letterIds
           : letterIds // ignore: cast_nullable_to_non_nullable
               as List<String>,
+      localizations: null == localizations
+          ? _value._localizations
+          : localizations // ignore: cast_nullable_to_non_nullable
+              as Map<String, WordLocalization>,
     ));
   }
 }
 
 /// @nodoc
 @JsonSerializable()
-class _$WordImpl implements _Word {
+class _$WordImpl extends _Word {
   const _$WordImpl(
       {required this.id,
-      required this.cyrillic,
-      required this.english,
-      required this.audioAssetPath,
       required this.imageAssetPath,
-      required final List<String> letterIds})
-      : _letterIds = letterIds;
+      required final List<String> letterIds,
+      required final Map<String, WordLocalization> localizations})
+      : _letterIds = letterIds,
+        _localizations = localizations,
+        super._();
 
   factory _$WordImpl.fromJson(Map<String, dynamic> json) =>
       _$$WordImplFromJson(json);
 
   @override
   final String id;
-  @override
-  final String cyrillic;
-  @override
-  final String english;
-  @override
-  final String audioAssetPath;
   @override
   final String imageAssetPath;
   final List<String> _letterIds;
@@ -198,9 +167,17 @@ class _$WordImpl implements _Word {
     return EqualUnmodifiableListView(_letterIds);
   }
 
+  final Map<String, WordLocalization> _localizations;
+  @override
+  Map<String, WordLocalization> get localizations {
+    if (_localizations is EqualUnmodifiableMapView) return _localizations;
+    // ignore: implicit_dynamic_type
+    return EqualUnmodifiableMapView(_localizations);
+  }
+
   @override
   String toString() {
-    return 'Word(id: $id, cyrillic: $cyrillic, english: $english, audioAssetPath: $audioAssetPath, imageAssetPath: $imageAssetPath, letterIds: $letterIds)';
+    return 'Word(id: $id, imageAssetPath: $imageAssetPath, letterIds: $letterIds, localizations: $localizations)';
   }
 
   @override
@@ -209,15 +186,12 @@ class _$WordImpl implements _Word {
         (other.runtimeType == runtimeType &&
             other is _$WordImpl &&
             (identical(other.id, id) || other.id == id) &&
-            (identical(other.cyrillic, cyrillic) ||
-                other.cyrillic == cyrillic) &&
-            (identical(other.english, english) || other.english == english) &&
-            (identical(other.audioAssetPath, audioAssetPath) ||
-                other.audioAssetPath == audioAssetPath) &&
             (identical(other.imageAssetPath, imageAssetPath) ||
                 other.imageAssetPath == imageAssetPath) &&
             const DeepCollectionEquality()
-                .equals(other._letterIds, _letterIds));
+                .equals(other._letterIds, _letterIds) &&
+            const DeepCollectionEquality()
+                .equals(other._localizations, _localizations));
   }
 
   @JsonKey(includeFromJson: false, includeToJson: false)
@@ -225,11 +199,9 @@ class _$WordImpl implements _Word {
   int get hashCode => Object.hash(
       runtimeType,
       id,
-      cyrillic,
-      english,
-      audioAssetPath,
       imageAssetPath,
-      const DeepCollectionEquality().hash(_letterIds));
+      const DeepCollectionEquality().hash(_letterIds),
+      const DeepCollectionEquality().hash(_localizations));
 
   /// Create a copy of Word
   /// with the given fields replaced by the non-null parameter values.
@@ -247,29 +219,24 @@ class _$WordImpl implements _Word {
   }
 }
 
-abstract class _Word implements Word {
+abstract class _Word extends Word {
   const factory _Word(
       {required final String id,
-      required final String cyrillic,
-      required final String english,
-      required final String audioAssetPath,
       required final String imageAssetPath,
-      required final List<String> letterIds}) = _$WordImpl;
+      required final List<String> letterIds,
+      required final Map<String, WordLocalization> localizations}) = _$WordImpl;
+  const _Word._() : super._();
 
   factory _Word.fromJson(Map<String, dynamic> json) = _$WordImpl.fromJson;
 
   @override
   String get id;
   @override
-  String get cyrillic;
-  @override
-  String get english;
-  @override
-  String get audioAssetPath;
-  @override
   String get imageAssetPath;
   @override
   List<String> get letterIds;
+  @override
+  Map<String, WordLocalization> get localizations;
 
   /// Create a copy of Word
   /// with the given fields replaced by the non-null parameter values.

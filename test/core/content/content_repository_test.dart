@@ -15,7 +15,7 @@ void main() {
       final repo = ContentRepository.fromJson(_loadFixture('content_valid.json'));
       expect(repo.lessons, hasLength(2));
       expect(repo.letterById('letter_a').cyrillic, 'А');
-      expect(repo.wordById('word_aav').english, 'father');
+      expect(repo.wordById('word_aav').text('en'), 'father');
       expect(repo.lessonByOrder(1).id, 'lesson_01');
     });
 
@@ -36,6 +36,13 @@ void main() {
     test('throws on dangling word → letter reference', () {
       expect(
         () => ContentRepository.fromJson(_loadFixture('content_dangling_word_letter.json')),
+        throwsA(isA<ContentValidationError>()),
+      );
+    });
+
+    test('throws when a word is missing a required localization', () {
+      expect(
+        () => ContentRepository.fromJson(_loadFixture('content_word_missing_lang.json')),
         throwsA(isA<ContentValidationError>()),
       );
     });

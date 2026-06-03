@@ -27,38 +27,10 @@
     }
   ],
   "words": [
-    {
-      "id": "word_aav",
-      "cyrillic": "Аав",
-      "english": "father",
-      "audio": "word_aav.mp3",
-      "image": "word_aav.png",
-      "letterIds": ["letter_a"]
-    },
-    {
-      "id": "word_akh",
-      "cyrillic": "Ах",
-      "english": "older brother",
-      "audio": "word_akh.mp3",
-      "image": "word_akh.png",
-      "letterIds": ["letter_a"]
-    },
-    {
-      "id": "word_baavgai",
-      "cyrillic": "Баавгай",
-      "english": "bear",
-      "audio": "word_baavgai.mp3",
-      "image": "word_baavgai.png",
-      "letterIds": ["letter_b", "letter_a"]
-    },
-    {
-      "id": "word_bombog",
-      "cyrillic": "Бөмбөг",
-      "english": "ball",
-      "audio": "word_bombog.mp3",
-      "image": "word_bombog.png",
-      "letterIds": ["letter_b"]
-    }
+    { "id": "word_aav", "image": "word_aav.png", "letterIds": ["letter_a"], "localizations": { "mn": {"text": "Аав", "audio": "word_aav.mp3"}, "en": {"text": "father"} } },
+    { "id": "word_akh", "image": "word_akh.png", "letterIds": ["letter_a"], "localizations": { "mn": {"text": "Ах", "audio": "word_akh.mp3"}, "en": {"text": "older brother"} } },
+    { "id": "word_baavgai", "image": "word_baavgai.png", "letterIds": ["letter_b", "letter_a"], "localizations": { "mn": {"text": "Баавгай", "audio": "word_baavgai.mp3"}, "en": {"text": "bear"} } },
+    { "id": "word_bombog", "image": "word_bombog.png", "letterIds": ["letter_b"], "localizations": { "mn": {"text": "Бөмбөг", "audio": "word_bombog.mp3"}, "en": {"text": "ball"} } }
   ],
   "lessons": [
     {

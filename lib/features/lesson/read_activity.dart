@@ -5,6 +5,7 @@ import 'package:flutter/services.dart';
 import 'package:flutter_animate/flutter_animate.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
+import '../../core/i18n/language.dart';
 import '../../core/providers.dart';
 import '../../models/word.dart';
 import '../../theme/app_theme.dart';
@@ -52,6 +53,7 @@ class _ReadActivityViewState extends ConsumerState<ReadActivityView> {
   @override
   Widget build(BuildContext context) {
     final target = ref.watch(contentRepositoryProvider).wordById(widget.spec.wordId);
+    final lang = ref.watch(learningLanguageProvider);
     final feedbackActive = _lockedChoiceId != null;
     return Padding(
       padding: const EdgeInsets.all(24),
@@ -59,14 +61,18 @@ class _ReadActivityViewState extends ConsumerState<ReadActivityView> {
         children: [
           const SizedBox(height: 24),
           Text(
-            target.cyrillic,
+            target.text(lang),
             style: const TextStyle(fontSize: 64, fontWeight: FontWeight.bold),
           ),
           const SizedBox(height: 12),
           AudioButton(
             size: 60,
-            onPressed: () =>
-                ref.read(audioServiceProvider).play(target.audioAssetPath),
+            onPressed: () {
+              final path = target.audioPath(lang);
+              if (path != null) {
+                ref.read(audioServiceProvider).play(path);
+              }
+            },
           ),
           const SizedBox(height: 12),
           Expanded(
@@ -163,7 +169,7 @@ class _Tile extends StatelessWidget {
               word.imageAssetPath,
               fit: BoxFit.contain,
               errorBuilder: (context, error, stackTrace) =>
-                  _imageFallback(word.english),
+                  _imageFallback(word.text(glossLanguage)),
             ),
             if (highlightCorrect)
               const Positioned(

@@ -1,12 +1,16 @@
 import 'package:bambaruush/features/lesson/distractors.dart';
 import 'package:bambaruush/models/lesson.dart';
 import 'package:bambaruush/models/word.dart';
+import 'package:bambaruush/models/word_localization.dart';
 import 'package:flutter_test/flutter_test.dart';
 
 Word _w(String id, [List<String> letters = const []]) => Word(
-  id: id, cyrillic: id, english: id,
-  audioAssetPath: '', imageAssetPath: '',
+  id: id, imageAssetPath: '',
   letterIds: letters,
+  localizations: {
+    'mn': WordLocalization(text: id, audioAssetPath: ''),
+    'en': WordLocalization(text: id),
+  },
 );
 
 Lesson _lesson(String id, String regionId, List<String> wordIds) => Lesson(
