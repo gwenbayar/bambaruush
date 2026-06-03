@@ -1,0 +1,48 @@
+name: bambaruush
+description: Mongolian language learning for kids.
+publish_to: 'none'
+version: 0.1.0
+
+environment:
+  sdk: '>=3.3.0 <4.0.0'
+
+dependencies:
+  flutter:
+    sdk: flutter
+  flutter_riverpod: ^2.5.1
+  go_router: ^14.2.0
+  just_audio: ^0.9.40
+  rive: ^0.13.13
+  flutter_animate: ^4.5.0
+  path_provider: ^2.1.3
+  freezed_annotation: ^2.4.1
+  json_annotation: ^4.9.0
+
+dev_dependencies:
+  flutter_test:
+    sdk: flutter
+  integration_test:
+    sdk: flutter
+  build_runner: ^2.4.11
+  freezed: ^2.5.7
+  json_serializable: ^6.8.0
+  flutter_lints: ^4.0.0
+
+flutter:
+  uses-material-design: true
+  assets:
+    - assets/content/
+    - assets/audio/
+    - assets/images/
+    - assets/images/words/
+    - assets/images/stickers/
+    - assets/images/regions/
+    - assets/trace_masks/
+    - assets/rive/
+  fonts:
+    - family: Fredoka
+      fonts:
+        - asset: assets/fonts/Fredoka.ttf
+    - family: Nunito
+      fonts:
+        - asset: assets/fonts/Nunito.ttf

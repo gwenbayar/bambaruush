@@ -1,0 +1,23 @@
+// GENERATED CODE - DO NOT MODIFY BY HAND
+
+part of 'sticker.dart';
+
+// **************************************************************************
+// JsonSerializableGenerator
+// **************************************************************************
+
+_$StickerImpl _$$StickerImplFromJson(Map<String, dynamic> json) =>
+    _$StickerImpl(
+      id: json['id'] as String,
+      lessonId: json['lessonId'] as String,
+      imageAssetPath: json['imageAssetPath'] as String,
+      nameEn: json['nameEn'] as String,
+    );
+
+Map<String, dynamic> _$$StickerImplToJson(_$StickerImpl instance) =>
+    <String, dynamic>{
+      'id': instance.id,
+      'lessonId': instance.lessonId,
+      'imageAssetPath': instance.imageAssetPath,
+      'nameEn': instance.nameEn,
+    };

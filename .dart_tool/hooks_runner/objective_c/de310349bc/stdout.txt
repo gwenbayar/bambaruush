@@ -1,0 +1,49 @@
+Running `(cd /Users/gb/.pub-cache/hosted/pub.dev/objective_c-9.4.1/; TMPDIR=/tmp/claude-501 PATH=/Users/gb/.local/bin:/Users/gb/Library/Application Support/Code/User/globalStorage/github.copilot-chat/debugCommand:/Users/gb/Library/Application Support/Code/User/globalStorage/github.copilot-chat/copilotCli:/opt/homebrew/bin:/opt/homebrew/sbin:/usr/local/bin:/System/Cryptexes/App/usr/bin:/usr/bin:/bin:/usr/sbin:/sbin:/var/run/com.apple.security.cryptexd/codex.system/bootstrap/usr/local/bin:/var/run/com.apple.security.cryptexd/codex.system/bootstrap/usr/bin:/var/run/com.apple.security.cryptexd/codex.system/bootstrap/usr/appleinternal/bin:/opt/pkg/env/active/bin:/opt/pmk/env/global/bin:/usr/local/share/dotnet:~/.dotnet/tools:/Users/gb/Library/Application Support/Code/User/globalStorage/github.copilot-chat/debugCommand:/Users/gb/Library/Application Support/Code/User/globalStorage/github.copilot-chat/copilotCli:/Users/gb/.local/bin:/opt/anaconda3/bin:/opt/anaconda3/condabin:/Users/gb/.dotnet/tools:/Users/gb/.dotnet/tools:/Users/gb/.claude/plugins/cache/claude-plugins-official/skill-creator/unknown/bin:/Users/gb/.claude/plugins/cache/claude-plugins-official/superpowers/5.1.0/bin:/Users/gb/.claude/plugins/cache/claude-plugins-official/code-simplifier/1.0.0/bin:/Users/gb/.claude/plugins/cache/claude-plugins-official/playwright/unknown/bin:/Users/gb/.claude/plugins/cache/claude-plugins-official/frontend-design/unknown/bin HOME=/Users/gb /opt/homebrew/share/flutter/bin/cache/dart-sdk/bin/dart --packages=/Users/gb/Documents/code_repos/bambaruush/.dart_tool/package_config.json /Users/gb/Documents/code_repos/bambaruush/.dart_tool/hooks_runner/objective_c/de310349bc/hook.dill --config=/Users/gb/Documents/code_repos/bambaruush/.dart_tool/hooks_runner/objective_c/de310349bc/input.json )`.
+INFO: 2026-06-01 15:15:02.145830: Using compiler /Library/Developer/CommandLineTools/usr/bin/clang from BuildInput.cCompiler.cc.
+
+INFO: 2026-06-01 15:15:02.149468: Running: /Library/Developer/CommandLineTools/usr/bin/clang -isysroot /Library/Developer/CommandLineTools/SDKs/MacOSX.sdk -target arm64-apple-darwin -mmacos-version-min=13 -c /Users/gb/.pub-cache/hosted/pub.dev/objective_c-9.4.1/src/include/dart_api_dl.c -fpic -gline-tables-only -I src -o /Users/gb/Documents/code_repos/bambaruush/.dart_tool/hooks_runner/shared/objective_c/build/de310349bc/obj/src/include/dart_api_dl.c.o
+
+INFO: 2026-06-01 15:15:02.150564: Running: /Library/Developer/CommandLineTools/usr/bin/clang -isysroot /Library/Developer/CommandLineTools/SDKs/MacOSX.sdk -target arm64-apple-darwin -mmacos-version-min=13 -c /Users/gb/.pub-cache/hosted/pub.dev/objective_c-9.4.1/src/objective_c.c -fpic -gline-tables-only -I src -o /Users/gb/Documents/code_repos/bambaruush/.dart_tool/hooks_runner/shared/objective_c/build/de310349bc/obj/src/objective_c.c.o
+
+INFO: 2026-06-01 15:15:02.150832: Running: /Library/Developer/CommandLineTools/usr/bin/clang -isysroot /Library/Developer/CommandLineTools/SDKs/MacOSX.sdk -target arm64-apple-darwin -mmacos-version-min=13 -x objective-c -fobjc-arc -c /Users/gb/.pub-cache/hosted/pub.dev/objective_c-9.4.1/src/objective_c.m -fpic -gline-tables-only -I src -o /Users/gb/Documents/code_repos/bambaruush/.dart_tool/hooks_runner/shared/objective_c/build/de310349bc/obj/src/objective_c.m.o
+
+ream_adapter.m.o
+
+INFO: 2026-06-01 15:15:02.151038: Running: /Library/Developer/CommandLineTools/usr/bin/clang -isysroot /Library/Developer/CommandLineTools/SDKs/MacOSX.sdk -target arm64-apple-darwin -mmacos-version-min=13 -x objective-c -fobjc-arc -c /Users/gb/.pub-cache/hosted/pub.dev/objective_c-9.4.1/src/ns_number.m -fpic -gline-tables-only -I src -o /Users/gb/Documents/code_repos/bambaruush/.dart_tool/hooks_runner/shared/objective_c/build/de310349bc/obj/src/ns_number.m.oINFO: 2026-06-01 15:15:02.151138: Running: /Library/Developer/CommandLineTools/usr/bin/clang -isysroot /Library/Developer/CommandLineTools/SDKs/MacOSX.sdk -target arm64-apple-darwin -mmacos-version-min=13 -x objective-c -fobjc-arc -c /Users/gb/.pub-cache/hosted/pub.dev/objective_c-9.4.1/src/protocol.m -fpic -gline-tables-only -I src -o /Users/gb/Documents/code_repos/bambaruush/.dart_tool/hooks_runner/shared/objective_c/build/de310349bc/obj/src/protocol.m.o
+
+INFO: 2026-06-01 15:15:02.151239: Running: /Library/Developer/CommandLineTools/usr/bin/clang -isysroot /Library/Developer/CommandLineTools/SDKs/MacOSX.sdk -target arm64-apple-darwin -mmacos-version-min=13 -x objective-c -fobjc-arc -c /Users/gb/.pub-cache/hosted/pub.dev/objective_c-9.4.1/src/objective_c_bindings_generated.m -fpic -gline-tables-only -I src -o /Users/gb/Documents/code_repos/bambaruush/.dart_tool/hooks_runner/shared/objective_c/build/de310349bc/obj/src/objective_c_bindings_generated.m.o
+
+INFO: 2026-06-01 15:15:02.513047: 
+INFO: 2026-06-01 15:15:02.513252: 
+INFO: 2026-06-01 15:15:02.513322: Generated /Users/gb/Documents/code_repos/bambaruush/.dart_tool/hooks_runner/shared/objective_c/build/de310349bc/obj/src/objective_c.c.o
+
+INFO: 2026-06-01 15:15:02.513751: 
+INFO: 2026-06-01 15:15:02.513791: 
+INFO: 2026-06-01 15:15:02.513826: Generated /Users/gb/Documents/code_repos/bambaruush/.dart_tool/hooks_runner/shared/objective_c/build/de310349bc/obj/src/include/dart_api_dl.c.o
+
+INFO: 2026-06-01 15:15:02.514989: 
+INFO: 2026-06-01 15:15:02.515003: 
+INFO: 2026-06-01 15:15:02.515018: Generated /Users/gb/Documents/code_repos/bambaruush/.dart_tool/hooks_runner/shared/objective_c/build/de310349bc/obj/src/observer.m.o
+
+INFO: 2026-06-01 15:15:02.801637: 
+INFO: 2026-06-01 15:15:02.801674: 
+INFO: 2026-06-01 15:15:02.801685: Generated /Users/gb/Documents/code_repos/bambaruush/.dart_tool/hooks_runner/shared/objective_c/build/de310349bc/obj/src/ns_number.m.o
+
+INFO: 2026-06-01 15:15:02.814041: 
+INFO: 2026-06-01 15:15:02.814076: 
+INFO: 2026-06-01 15:15:02.814091: Generated /Users/gb/Documents/code_repos/bambaruush/.dart_tool/hooks_runner/shared/objective_c/build/de310349bc/obj/src/objective_c.m.o
+
+INFO: 2026-06-01 15:15:02.817833: 
+INFO: 2026-06-01 15:15:02.817867: 
+INFO: 2026-06-01 15:15:02.817878: Generated /Users/gb/Documents/code_repos/bambaruush/.dart_tool/hooks_runner/shared/objective_c/build/de310349bc/obj/src/input_stream_adapter.m.o
+
+INFO: 2026-06-01 15:15:02.832243: 
+INFO: 2026-06-01 15:15:02.832268: 
+INFO: 2026-06-01 15:15:02.832279: Generated /Users/gb/Documents/code_repos/bambaruush/.dart_tool/hooks_runner/shared/objective_c/build/de310349bc/obj/src/objective_c_bindings_generated.m.o
+
+INFO: 2026-06-01 15:15:02.832562: Running: /Library/Developer/CommandLineTools/usr/bin/clang -shared -Wl,-encryptable -undefined dynamic_lookup -isysroot /Library/Developer/CommandLineTools/SDKs/MacOSX.sdk -target arm64-apple-darwin -mmacos-version-min=13 /Users/gb/Documents/code_repos/bambaruush/.dart_tool/hooks_runner/shared/objective_c/build/de310349bc/obj/src/include/dart_api_dl.c.o /Users/gb/Documents/code_repos/bambaruush/.dart_tool/hooks_runner/shared/objective_c/build/de310349bc/obj/src/objective_c.c.o /Users/gb/Documents/code_repos/bambaruush/.dart_tool/hooks_runner/shared/objective_c/build/de310349bc/obj/src/input_stream_adapter.m.o /Users/gb/Documents/code_repos/bambaruush/.dart_tool/hooks_runner/shared/objective_c/build/de310349bc/obj/src/objective_c.m.o /Users/gb/Documents/code_repos/bambaruush/.dart_tool/hooks_runner/shared/objective_c/build/de310349bc/obj/src/observer.m.o /Users/gb/Documents/code_repos/bambaruush/.dart_tool/hooks_runner/shared/objective_c/build/de310349bc/obj/src/ns_number.m.o /Users/gb/Documents/code_repos/bambaruush/.dart_tool/hooks_runner/shared/objective_c/build/de310349bc/obj/src/protocol.m.o /Users/gb/Documents/code_repos/bambaruush/.dart_tool/hooks_runner/shared/objective_c/build/de310349bc/obj/src/objective_c_bindings_generated.m.o -o /Users/gb/Documents/code_repos/bambaruush/.dart_tool/hooks_runner/shared/objective_c/build/de310349bc/objective_c.dylib
+
+INFO: 2026-06-01 15:15:03.059415: 
+INFO: 2026-06-01 15:15:03.059478: 
+INFO: 2026-06-01 15:15:03.059492: Generated /Users/gb/Documents/code_repos/bambaruush/.dart_tool/hooks_runner/shared/objective_c/build/de310349bc/objective_c.dylib
+

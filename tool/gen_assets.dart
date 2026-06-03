@@ -1,0 +1,56 @@
+import 'dart:io';
+import 'dart:typed_data';
+
+// 32-byte silent MP3 frame: enough for just_audio to recognize the file format
+// without crashing. Audio playback will produce silence and may not actually
+// play, but our AudioService swallows errors.
+final silentMp3 = Uint8List.fromList([
+  0xFF, 0xFB, 0x90, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00,
+  0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00,
+]);
+
+// Minimal valid 1x1 transparent PNG
+final pngStub = Uint8List.fromList([
+  0x89, 0x50, 0x4E, 0x47, 0x0D, 0x0A, 0x1A, 0x0A, // PNG signature
+  0x00, 0x00, 0x00, 0x0D, 0x49, 0x48, 0x44, 0x52, // IHDR length + type
+  0x00, 0x00, 0x00, 0x01, 0x00, 0x00, 0x00, 0x01, // width=1, height=1
+  0x08, 0x06, 0x00, 0x00, 0x00, 0x1F, 0x15, 0xC4, // bit depth 8, RGBA
+  0x89,
+  0x00, 0x00, 0x00, 0x0D, 0x49, 0x44, 0x41, 0x54, // IDAT length + type
+  0x78, 0x9C, 0x62, 0x00, 0x01, 0x00, 0x00, 0x05, // compressed image data
+  0x00, 0x01, 0x0D, 0x0A, 0x2D, 0xB4,
+  0x00, 0x00, 0x00, 0x00, 0x49, 0x45, 0x4E, 0x44, // IEND
+  0xAE, 0x42, 0x60, 0x82,
+]);
+
+void main() {
+  for (final name in [
+    'letter_a',
+    'letter_b',
+    'word_aav',
+    'word_akh',
+    'word_baavgai',
+    'word_bombog',
+  ]) {
+    File('assets/audio/$name.mp3').writeAsBytesSync(silentMp3);
+  }
+
+  final pngFiles = [
+    'assets/images/words/word_aav.png',
+    'assets/images/words/word_akh.png',
+    'assets/images/words/word_baavgai.png',
+    'assets/images/words/word_bombog.png',
+    'assets/images/stickers/sticker_father_bear.png',
+    'assets/images/stickers/sticker_ball.png',
+    'assets/images/regions/region_yurt.png',
+    'assets/images/steppe_map.png',
+    'assets/trace_masks/letter_a.png',
+    'assets/trace_masks/letter_b.png',
+  ];
+  for (final f in pngFiles) {
+    File(f).writeAsBytesSync(pngStub);
+  }
+
+  // ignore: avoid_print
+  print('Generated ${6} mp3 stubs and ${pngFiles.length} png stubs.');
+}
