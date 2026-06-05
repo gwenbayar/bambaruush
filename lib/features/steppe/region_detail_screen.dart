@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 
+import '../../core/i18n/language.dart';
 import '../../core/providers.dart';
 import '../../models/lesson.dart';
 import '../../models/progress.dart';
@@ -34,7 +35,7 @@ class RegionDetailScreen extends ConsumerWidget {
               final completed =
                   progress.lessons[lesson.id]?.completed ?? false;
               final wordsPreview = lesson.wordIds
-                  .map((w) => content.wordById(w).english)
+                  .map((w) => content.wordById(w).text(glossLanguage))
                   .join(' · ');
               final isVocab = lesson.kind == LessonKind.vocabulary ||
                   lesson.letterIds.isEmpty;

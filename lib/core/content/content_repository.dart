@@ -7,6 +7,7 @@ import '../../models/letter.dart';
 import '../../models/region.dart';
 import '../../models/sticker.dart';
 import '../../models/word.dart';
+import '../../models/word_localization.dart';
 
 class ContentValidationError implements Exception {
   ContentValidationError(this.message);
@@ -180,14 +181,34 @@ class ContentRepository {
         traceTemplatePath: '$_traceMaskPrefix${j['traceMask']}',
       );
 
-  static Word _wordFromRawJson(Map<String, dynamic> j) => Word(
-        id: j['id'] as String,
-        cyrillic: j['cyrillic'] as String,
-        english: j['english'] as String,
-        audioAssetPath: '$_audioPrefix${j['audio']}',
-        imageAssetPath: '$_wordImagePrefix${j['image']}',
-        letterIds: List<String>.from(j['letterIds'] as List),
+  static const _requiredWordLanguages = ['mn', 'en'];
+
+  static Word _wordFromRawJson(Map<String, dynamic> j) {
+    final rawLocs = j['localizations'] as Map<String, dynamic>;
+    final localizations = <String, WordLocalization>{};
+    rawLocs.forEach((lang, value) {
+      final m = value as Map<String, dynamic>;
+      final audio = m['audio'] as String?;
+      localizations[lang] = WordLocalization(
+        text: m['text'] as String,
+        audioAssetPath: audio == null ? null : '$_audioPrefix$audio',
       );
+    });
+    final id = j['id'] as String;
+    for (final lang in _requiredWordLanguages) {
+      if (!localizations.containsKey(lang)) {
+        throw ContentValidationError(
+          'word $id is missing required localization "$lang"',
+        );
+      }
+    }
+    return Word(
+      id: id,
+      imageAssetPath: '$_wordImagePrefix${j['image']}',
+      letterIds: List<String>.from(j['letterIds'] as List),
+      localizations: localizations,
+    );
+  }
 
   static Sticker _stickerFromRawJson(Map<String, dynamic> j) => Sticker(
         id: j['id'] as String,

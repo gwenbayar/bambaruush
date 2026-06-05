@@ -5,6 +5,7 @@ import 'package:flutter/services.dart';
 import 'package:flutter_animate/flutter_animate.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
+import '../../core/i18n/language.dart';
 import '../../core/providers.dart';
 import '../../models/word.dart';
 import '../../theme/app_theme.dart';
@@ -52,8 +53,11 @@ class _ListenActivityViewState extends ConsumerState<ListenActivityView> {
 
   Future<void> _playTarget() async {
     final content = ref.read(contentRepositoryProvider);
-    final target = content.wordById(widget.spec.wordId);
-    await ref.read(audioServiceProvider).play(target.audioAssetPath);
+    final lang = ref.read(learningLanguageProvider);
+    final path = content.wordById(widget.spec.wordId).audioPath(lang);
+    if (path != null) {
+      await ref.read(audioServiceProvider).play(path);
+    }
   }
 
   @override
@@ -168,11 +172,11 @@ class _Tile extends StatelessWidget {
                     word.imageAssetPath,
                     fit: BoxFit.contain,
                     errorBuilder: (context, error, stackTrace) =>
-                        _imageFallback(word.english),
+                        _imageFallback(word.text(glossLanguage)),
                   ),
                 ),
                 Text(
-                  word.english,
+                  word.text(glossLanguage),
                   style: const TextStyle(fontSize: 12, color: Colors.brown),
                 ),
               ],
