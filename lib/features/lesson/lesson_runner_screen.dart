@@ -7,17 +7,21 @@ import '../../core/srs/leitner_engine.dart';
 import '../../models/lesson.dart';
 import '../../models/lesson_progress.dart';
 import '../mascot/mascot_overlay.dart';
-import 'intro_stage.dart';
-import 'lesson_runner.dart';
-import 'listen_stage.dart';
-import 'read_stage.dart';
-import 'reward_stage.dart';
-import 'trace_stage.dart';
+import 'activity_spec.dart';
+import 'intro_activity.dart';
+import 'lesson_session.dart';
+import 'listen_activity.dart';
+import 'read_activity.dart';
+import 'reward_activity.dart';
+import 'session_runner.dart';
+import 'trace_activity.dart';
 
 final lessonRunnerProvider = StateNotifierProvider.autoDispose
-    .family<LessonRunnerController, LessonRunnerState, Lesson>(
-  (ref, lesson) => LessonRunnerController(lesson: lesson, skipTrace: false),
-);
+    .family<SessionRunner, SessionRunnerState, Lesson>((ref, lesson) {
+  final content = ref.watch(contentRepositoryProvider);
+  final sequence = LessonSession(lesson: lesson, content: content).buildSequence();
+  return SessionRunner(sequence: sequence);
+});
 
 class LessonRunnerScreen extends ConsumerWidget {
   const LessonRunnerScreen({super.key, required this.lessonId});
@@ -30,10 +34,10 @@ class LessonRunnerScreen extends ConsumerWidget {
     final state = ref.watch(lessonRunnerProvider(lesson));
     final runner = ref.read(lessonRunnerProvider(lesson).notifier);
 
-    ref.listen<LessonRunnerState>(
+    ref.listen<SessionRunnerState>(
       lessonRunnerProvider(lesson),
       (prev, next) async {
-        if (next.stage is LessonComplete && prev?.stage is! LessonComplete) {
+        if (next.current is SessionComplete && prev?.current is! SessionComplete) {
           await _persistCompletion(ref, lesson, next);
           if (context.mounted) context.pop();
         }
@@ -50,7 +54,7 @@ class LessonRunnerScreen extends ConsumerWidget {
       },
       child: Scaffold(
         appBar: AppBar(
-          title: Text('Lesson ${lesson.order}'),
+          title: Text(lesson.title ?? 'Lesson ${lesson.order}'),
           leading: IconButton(
             icon: const Icon(Icons.close),
             onPressed: () async {
@@ -62,7 +66,7 @@ class LessonRunnerScreen extends ConsumerWidget {
         ),
         body: Stack(
           children: [
-            _stageWidget(state, runner),
+            _activityWidget(state, runner),
             Positioned(
               top: 8,
               left: 16,
@@ -80,32 +84,30 @@ class LessonRunnerScreen extends ConsumerWidget {
     );
   }
 
-  Widget _stageWidget(LessonRunnerState s, LessonRunnerController r) {
-    final stage = s.stage;
-    if (stage is IntroStage) {
-      return IntroStageWidget(stage: stage, onContinue: () => r.advance(correct: true));
+  Widget _activityWidget(SessionRunnerState s, SessionRunner r) {
+    final spec = s.current;
+    if (spec is IntroSpec) {
+      return IntroActivityView(spec: spec, onContinue: () => r.advance(correct: true));
     }
-    if (stage is TraceStage) {
-      return TraceStageWidget(stage: stage, onResult: r.advance);
+    if (spec is TraceSpec) {
+      return TraceActivityView(spec: spec, onResult: r.advance);
     }
-    if (stage is ListenStage) {
-      return ListenStageWidget(
-        key: ValueKey('listen-${stage.wordId}-${stage.attempt}'),
-        stage: stage,
-        lesson: s.lesson,
+    if (spec is ListenSpec) {
+      return ListenActivityView(
+        key: ValueKey('listen-${spec.wordId}-${spec.attempt}'),
+        spec: spec,
         onResult: r.advance,
       );
     }
-    if (stage is ReadStage) {
-      return ReadStageWidget(
-        key: ValueKey('read-${stage.wordId}-${stage.attempt}'),
-        stage: stage,
-        lesson: s.lesson,
+    if (spec is ReadSpec) {
+      return ReadActivityView(
+        key: ValueKey('read-${spec.wordId}-${spec.attempt}'),
+        spec: spec,
         onResult: r.advance,
       );
     }
-    if (stage is RewardStage) {
-      return RewardStageWidget(stage: stage, onContinue: () => r.advance(correct: true));
+    if (spec is RewardSpec) {
+      return RewardActivityView(spec: spec, onContinue: () => r.advance(correct: true));
     }
     return const SizedBox.shrink();
   }
@@ -134,7 +136,7 @@ class LessonRunnerScreen extends ConsumerWidget {
   Future<void> _persistCompletion(
     WidgetRef ref,
     Lesson lesson,
-    LessonRunnerState s,
+    SessionRunnerState s,
   ) async {
     final progress = ref.read(progressControllerProvider);
     final progressCtrl = ref.read(progressControllerProvider.notifier);

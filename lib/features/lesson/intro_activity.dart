@@ -5,29 +5,29 @@ import '../../core/providers.dart';
 import '../../theme/app_theme.dart';
 import '../../widgets/audio_button.dart';
 import '../../widgets/candy_button.dart';
-import 'lesson_runner.dart';
+import 'activity_spec.dart';
 
-class IntroStageWidget extends ConsumerStatefulWidget {
-  const IntroStageWidget({super.key, required this.stage, required this.onContinue});
-  final IntroStage stage;
+class IntroActivityView extends ConsumerStatefulWidget {
+  const IntroActivityView({super.key, required this.spec, required this.onContinue});
+  final IntroSpec spec;
   final VoidCallback onContinue;
   @override
-  ConsumerState<IntroStageWidget> createState() => _IntroStageWidgetState();
+  ConsumerState<IntroActivityView> createState() => _IntroActivityViewState();
 }
 
-class _IntroStageWidgetState extends ConsumerState<IntroStageWidget> {
+class _IntroActivityViewState extends ConsumerState<IntroActivityView> {
   @override
   void initState() {
     super.initState();
     WidgetsBinding.instance.addPostFrameCallback((_) {
-      final letter = ref.read(contentRepositoryProvider).letterById(widget.stage.letterId);
+      final letter = ref.read(contentRepositoryProvider).letterById(widget.spec.letterId);
       ref.read(audioServiceProvider).play(letter.audioAssetPath);
     });
   }
 
   @override
   Widget build(BuildContext context) {
-    final letter = ref.watch(contentRepositoryProvider).letterById(widget.stage.letterId);
+    final letter = ref.watch(contentRepositoryProvider).letterById(widget.spec.letterId);
     return Center(
       child: Column(
         mainAxisAlignment: MainAxisAlignment.center,
