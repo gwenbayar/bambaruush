@@ -23,7 +23,7 @@ void main() {
   test('load returns Progress.empty() when file missing', () async {
     final p = await repo.load();
     expect(p.lessons, isEmpty);
-    expect(p.schemaVersion, 2);
+    expect(p.schemaVersion, 3);
   });
 
   test('save then load round-trips', () async {
@@ -56,7 +56,7 @@ void main() {
     await f.writeAsString('{"schemaVersion": 999, "lessons": {}, "srsByItem": {}, '
         '"earnedStickerIds": [], "lastPlayed": "2026-05-27T00:00:00.000Z"}');
     final loaded = await repo.load();
-    expect(loaded.schemaVersion, 2);
+    expect(loaded.schemaVersion, 3);
     expect(loaded.lessons, isEmpty);
   });
 
@@ -77,6 +77,25 @@ void main() {
     final box = loaded.srsByItem['letter:letter_a']!;
     expect(box.itemType, ItemType.letter);
     expect(box.level, 3);
+  });
+
+  test('round-trips lastWarmupAt and warmupCount', () async {
+    final now = DateTime.utc(2026, 6, 5, 9);
+    final p = Progress.empty(now: now).copyWith(lastWarmupAt: now, warmupCount: 4);
+    await repo.save(p);
+    final loaded = await repo.load();
+    expect(loaded.lastWarmupAt, now);
+    expect(loaded.warmupCount, 4);
+    expect(loaded.schemaVersion, 3);
+  });
+
+  test('preserves default lastWarmupAt (null) and warmupCount (0)', () async {
+    final fresh = Progress.empty(now: DateTime.utc(2026, 6, 5, 9));
+    await repo.save(fresh);
+    final loaded = await repo.load();
+    expect(loaded.lastWarmupAt, isNull);
+    expect(loaded.warmupCount, 0);
+    expect(loaded.schemaVersion, 3);
   });
 
   test('reset deletes the file', () async {

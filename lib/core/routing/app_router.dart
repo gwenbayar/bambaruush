@@ -9,6 +9,7 @@ import '../../features/steppe/region_detail_screen.dart';
 import '../../features/steppe/splash_screen.dart';
 import '../../features/steppe/steppe_map_screen.dart';
 import '../../features/stickers/sticker_album_screen.dart';
+import '../../features/warmup/warmup_prompt_screen.dart';
 
 final appRouterProvider = Provider<GoRouter>((ref) {
   return GoRouter(
@@ -26,7 +27,12 @@ final appRouterProvider = Provider<GoRouter>((ref) {
         builder: (_, state) =>
             LessonRunnerScreen(lessonId: state.pathParameters['id']!),
       ),
-      GoRoute(path: '/review', builder: (_, __) => const ReviewRunnerScreen()),
+      GoRoute(
+        path: '/review',
+        builder: (_, state) =>
+            ReviewRunnerScreen(warmup: state.uri.queryParameters['warmup'] == '1'),
+      ),
+      GoRoute(path: '/warmup', builder: (_, __) => const WarmupPromptScreen()),
       GoRoute(path: '/album', builder: (_, __) => const StickerAlbumScreen()),
       GoRoute(path: '/settings/gate', builder: (_, __) => const ParentGateScreen()),
       GoRoute(path: '/settings', builder: (_, __) => const SettingsScreen()),

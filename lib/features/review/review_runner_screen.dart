@@ -11,10 +11,11 @@ import '../lesson/activity_view.dart';
 import '../lesson/session_runner.dart';
 import '../lesson/srs_update.dart';
 import '../mascot/mascot_overlay.dart';
+import '../warmup/warmup_logic.dart';
 import 'review_queue.dart';
 import 'review_session.dart';
 
-enum ReviewMode { due, free }
+enum ReviewMode { due, free, warmup }
 
 /// Fresh runner per entry, keyed by mode. Reads the item list once at creation
 /// (ref.read, not watch) so the session is fixed for its duration.
@@ -26,10 +27,15 @@ final reviewRunnerProvider = StateNotifierProvider.autoDispose
     for (final b in srs.values)
       if (b.itemType == ItemType.word) b.itemId,
   ];
-  final items = mode == ReviewMode.due
-      ? ref.read(reviewQueueProvider)
-      : ref.read(freePracticeProvider);
-  final session = mode == ReviewMode.due
+  final due = ref.read(reviewQueueProvider);
+  final free = ref.read(freePracticeProvider);
+  // Warm-up reviews due items if any, else free-practice. due/free modes are
+  // unchanged. (.due and .free build identically; the factory name documents
+  // which pool the items came from.)
+  final useDue =
+      mode == ReviewMode.due || (mode == ReviewMode.warmup && due.isNotEmpty);
+  final items = useDue ? due : free;
+  final session = useDue
       ? ReviewSession.due(
           items: items,
           content: content,
@@ -44,7 +50,11 @@ final reviewRunnerProvider = StateNotifierProvider.autoDispose
 });
 
 class ReviewRunnerScreen extends ConsumerStatefulWidget {
-  const ReviewRunnerScreen({super.key});
+  const ReviewRunnerScreen({super.key, this.warmup = false});
+
+  /// When true, this is the daily warm-up: always run (no gate), persist via
+  /// _persistWarmup, and exit with go('/steppe') instead of pop.
+  final bool warmup;
 
   @override
   ConsumerState<ReviewRunnerScreen> createState() => _ReviewRunnerScreenState();
@@ -52,13 +62,25 @@ class ReviewRunnerScreen extends ConsumerStatefulWidget {
 
 class _ReviewRunnerScreenState extends ConsumerState<ReviewRunnerScreen> {
   // Locked at entry so a post-session progress change can't flip us back to the
-  // gate before we pop.
+  // gate before we exit.
   ReviewMode? _mode;
 
   @override
   void initState() {
     super.initState();
-    if (ref.read(reviewQueueProvider).isNotEmpty) {
+    if (widget.warmup) {
+      final hasItems = ref.read(reviewQueueProvider).isNotEmpty ||
+          ref.read(freePracticeProvider).isNotEmpty;
+      if (hasItems) {
+        _mode = ReviewMode.warmup;
+      } else {
+        // Defensive: reached warm-up with nothing to practice (normally
+        // prevented by the splash check). Bounce to the map.
+        WidgetsBinding.instance.addPostFrameCallback((_) {
+          if (mounted) context.go('/steppe');
+        });
+      }
+    } else if (ref.read(reviewQueueProvider).isNotEmpty) {
       _mode = ReviewMode.due;
     }
   }
@@ -66,20 +88,31 @@ class _ReviewRunnerScreenState extends ConsumerState<ReviewRunnerScreen> {
   @override
   Widget build(BuildContext context) {
     final mode = _mode;
-    if (mode == null) {
-      return _CaughtUpView(
-        canPractice: ref.watch(freePracticeProvider).isNotEmpty,
-        onPractice: () => setState(() => _mode = ReviewMode.free),
-        onBack: () => context.pop(),
-      );
-    }
-    return _RunningView(mode: mode);
+    if (mode != null) return _RunningView(mode: mode);
+    if (widget.warmup) return const SizedBox.shrink(); // redirecting to /steppe
+    return _CaughtUpView(
+      canPractice: ref.watch(freePracticeProvider).isNotEmpty,
+      onPractice: () => setState(() => _mode = ReviewMode.free),
+      onBack: () => context.pop(),
+    );
   }
 }
 
 class _RunningView extends ConsumerWidget {
   const _RunningView({required this.mode});
   final ReviewMode mode;
+
+  bool get _isWarmup => mode == ReviewMode.warmup;
+
+  // Warm-up is entered via go (splash → /warmup → /review?warmup=1), so it exits
+  // to the map; due/free are pushed from the landmark, so they pop.
+  void _exit(BuildContext context) {
+    if (_isWarmup) {
+      context.go('/steppe');
+    } else {
+      context.pop();
+    }
+  }
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
@@ -88,8 +121,12 @@ class _RunningView extends ConsumerWidget {
 
     ref.listen<SessionRunnerState>(reviewRunnerProvider(mode), (prev, next) async {
       if (next.current is SessionComplete && prev?.current is! SessionComplete) {
-        await _persistReview(ref, next);
-        if (context.mounted) context.pop();
+        if (_isWarmup) {
+          await _persistWarmup(ref, next);
+        } else {
+          await _persistReview(ref, next);
+        }
+        if (context.mounted) _exit(context);
       }
     });
 
@@ -97,15 +134,15 @@ class _RunningView extends ConsumerWidget {
       canPop: false,
       onPopInvokedWithResult: (didPop, _) async {
         if (didPop) return;
-        if (await _confirmQuit(context) && context.mounted) context.pop();
+        if (await _confirmQuit(context) && context.mounted) _exit(context);
       },
       child: Scaffold(
         appBar: AppBar(
-          title: const Text('Practice'),
+          title: Text(_isWarmup ? 'Warm-up' : 'Practice'),
           leading: IconButton(
             icon: const Icon(Icons.close),
             onPressed: () async {
-              if (await _confirmQuit(context) && context.mounted) context.pop();
+              if (await _confirmQuit(context) && context.mounted) _exit(context);
             },
           ),
         ),
@@ -140,6 +177,17 @@ Future<void> _persistReview(WidgetRef ref, SessionRunnerState s) async {
   );
   await ref.read(progressControllerProvider.notifier).update(
         progress.copyWith(srsByItem: newSrs, lastPlayed: now),
+      );
+}
+
+Future<void> _persistWarmup(WidgetRef ref, SessionRunnerState s) async {
+  final progress = ref.read(progressControllerProvider);
+  await ref.read(progressControllerProvider.notifier).update(
+        applyWarmupCompletion(
+          current: progress,
+          itemCorrectness: s.itemCorrectness,
+          now: DateTime.now(),
+        ),
       );
 }
 
