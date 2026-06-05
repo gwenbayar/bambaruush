@@ -1,13 +1,17 @@
 import 'package:freezed_annotation/freezed_annotation.dart';
 
+import 'item.dart';
 import 'word_localization.dart';
 
 part 'word.freezed.dart';
 part 'word.g.dart';
 
 @freezed
-class Word with _$Word {
+class Word with _$Word implements Item {
   const Word._();
+
+  @override
+  ItemType get type => ItemType.word;
 
   const factory Word({
     required String id,

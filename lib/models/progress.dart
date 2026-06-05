@@ -10,7 +10,7 @@ part 'progress.g.dart';
 class Progress with _$Progress {
   const factory Progress({
     required Map<String, LessonProgress> lessons,
-    required Map<String, SrsBox> srsByWord,
+    required Map<String, SrsBox> srsByItem,
     required Set<String> earnedStickerIds,
     required int schemaVersion,
     required DateTime lastPlayed,
@@ -21,9 +21,9 @@ class Progress with _$Progress {
 
   factory Progress.empty({DateTime? now}) => Progress(
         lessons: const {},
-        srsByWord: const {},
+        srsByItem: const {},
         earnedStickerIds: const {},
-        schemaVersion: 1,
+        schemaVersion: 2,
         lastPlayed: now ?? DateTime.now(),
       );
 }

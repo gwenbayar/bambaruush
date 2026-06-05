@@ -1,10 +1,17 @@
 import 'package:freezed_annotation/freezed_annotation.dart';
 
+import 'item.dart';
+
 part 'letter.freezed.dart';
 part 'letter.g.dart';
 
 @freezed
-class Letter with _$Letter {
+class Letter with _$Letter implements Item {
+  const Letter._();
+
+  @override
+  ItemType get type => ItemType.letter;
+
   const factory Letter({
     required String id,
     required String cyrillic,

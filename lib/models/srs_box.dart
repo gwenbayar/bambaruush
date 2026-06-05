@@ -1,12 +1,15 @@
 import 'package:freezed_annotation/freezed_annotation.dart';
 
+import 'item.dart';
+
 part 'srs_box.freezed.dart';
 part 'srs_box.g.dart';
 
 @freezed
 class SrsBox with _$SrsBox {
   const factory SrsBox({
-    required String wordId,
+    required String itemId,
+    required ItemType itemType,
     required int level,
     required DateTime nextReviewAt,
     required int correctStreak,

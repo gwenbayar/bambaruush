@@ -21,7 +21,7 @@ Progress _$ProgressFromJson(Map<String, dynamic> json) {
 /// @nodoc
 mixin _$Progress {
   Map<String, LessonProgress> get lessons => throw _privateConstructorUsedError;
-  Map<String, SrsBox> get srsByWord => throw _privateConstructorUsedError;
+  Map<String, SrsBox> get srsByItem => throw _privateConstructorUsedError;
   Set<String> get earnedStickerIds => throw _privateConstructorUsedError;
   int get schemaVersion => throw _privateConstructorUsedError;
   DateTime get lastPlayed => throw _privateConstructorUsedError;
@@ -44,7 +44,7 @@ abstract class $ProgressCopyWith<$Res> {
   @useResult
   $Res call(
       {Map<String, LessonProgress> lessons,
-      Map<String, SrsBox> srsByWord,
+      Map<String, SrsBox> srsByItem,
       Set<String> earnedStickerIds,
       int schemaVersion,
       DateTime lastPlayed,
@@ -67,7 +67,7 @@ class _$ProgressCopyWithImpl<$Res, $Val extends Progress>
   @override
   $Res call({
     Object? lessons = null,
-    Object? srsByWord = null,
+    Object? srsByItem = null,
     Object? earnedStickerIds = null,
     Object? schemaVersion = null,
     Object? lastPlayed = null,
@@ -78,9 +78,9 @@ class _$ProgressCopyWithImpl<$Res, $Val extends Progress>
           ? _value.lessons
           : lessons // ignore: cast_nullable_to_non_nullable
               as Map<String, LessonProgress>,
-      srsByWord: null == srsByWord
-          ? _value.srsByWord
-          : srsByWord // ignore: cast_nullable_to_non_nullable
+      srsByItem: null == srsByItem
+          ? _value.srsByItem
+          : srsByItem // ignore: cast_nullable_to_non_nullable
               as Map<String, SrsBox>,
       earnedStickerIds: null == earnedStickerIds
           ? _value.earnedStickerIds
@@ -112,7 +112,7 @@ abstract class _$$ProgressImplCopyWith<$Res>
   @useResult
   $Res call(
       {Map<String, LessonProgress> lessons,
-      Map<String, SrsBox> srsByWord,
+      Map<String, SrsBox> srsByItem,
       Set<String> earnedStickerIds,
       int schemaVersion,
       DateTime lastPlayed,
@@ -133,7 +133,7 @@ class __$$ProgressImplCopyWithImpl<$Res>
   @override
   $Res call({
     Object? lessons = null,
-    Object? srsByWord = null,
+    Object? srsByItem = null,
     Object? earnedStickerIds = null,
     Object? schemaVersion = null,
     Object? lastPlayed = null,
@@ -144,9 +144,9 @@ class __$$ProgressImplCopyWithImpl<$Res>
           ? _value._lessons
           : lessons // ignore: cast_nullable_to_non_nullable
               as Map<String, LessonProgress>,
-      srsByWord: null == srsByWord
-          ? _value._srsByWord
-          : srsByWord // ignore: cast_nullable_to_non_nullable
+      srsByItem: null == srsByItem
+          ? _value._srsByItem
+          : srsByItem // ignore: cast_nullable_to_non_nullable
               as Map<String, SrsBox>,
       earnedStickerIds: null == earnedStickerIds
           ? _value._earnedStickerIds
@@ -173,13 +173,13 @@ class __$$ProgressImplCopyWithImpl<$Res>
 class _$ProgressImpl implements _Progress {
   const _$ProgressImpl(
       {required final Map<String, LessonProgress> lessons,
-      required final Map<String, SrsBox> srsByWord,
+      required final Map<String, SrsBox> srsByItem,
       required final Set<String> earnedStickerIds,
       required this.schemaVersion,
       required this.lastPlayed,
       this.volume = 1.0})
       : _lessons = lessons,
-        _srsByWord = srsByWord,
+        _srsByItem = srsByItem,
         _earnedStickerIds = earnedStickerIds;
 
   factory _$ProgressImpl.fromJson(Map<String, dynamic> json) =>
@@ -193,12 +193,12 @@ class _$ProgressImpl implements _Progress {
     return EqualUnmodifiableMapView(_lessons);
   }
 
-  final Map<String, SrsBox> _srsByWord;
+  final Map<String, SrsBox> _srsByItem;
   @override
-  Map<String, SrsBox> get srsByWord {
-    if (_srsByWord is EqualUnmodifiableMapView) return _srsByWord;
+  Map<String, SrsBox> get srsByItem {
+    if (_srsByItem is EqualUnmodifiableMapView) return _srsByItem;
     // ignore: implicit_dynamic_type
-    return EqualUnmodifiableMapView(_srsByWord);
+    return EqualUnmodifiableMapView(_srsByItem);
   }
 
   final Set<String> _earnedStickerIds;
@@ -219,7 +219,7 @@ class _$ProgressImpl implements _Progress {
 
   @override
   String toString() {
-    return 'Progress(lessons: $lessons, srsByWord: $srsByWord, earnedStickerIds: $earnedStickerIds, schemaVersion: $schemaVersion, lastPlayed: $lastPlayed, volume: $volume)';
+    return 'Progress(lessons: $lessons, srsByItem: $srsByItem, earnedStickerIds: $earnedStickerIds, schemaVersion: $schemaVersion, lastPlayed: $lastPlayed, volume: $volume)';
   }
 
   @override
@@ -229,7 +229,7 @@ class _$ProgressImpl implements _Progress {
             other is _$ProgressImpl &&
             const DeepCollectionEquality().equals(other._lessons, _lessons) &&
             const DeepCollectionEquality()
-                .equals(other._srsByWord, _srsByWord) &&
+                .equals(other._srsByItem, _srsByItem) &&
             const DeepCollectionEquality()
                 .equals(other._earnedStickerIds, _earnedStickerIds) &&
             (identical(other.schemaVersion, schemaVersion) ||
@@ -244,7 +244,7 @@ class _$ProgressImpl implements _Progress {
   int get hashCode => Object.hash(
       runtimeType,
       const DeepCollectionEquality().hash(_lessons),
-      const DeepCollectionEquality().hash(_srsByWord),
+      const DeepCollectionEquality().hash(_srsByItem),
       const DeepCollectionEquality().hash(_earnedStickerIds),
       schemaVersion,
       lastPlayed,
@@ -269,7 +269,7 @@ class _$ProgressImpl implements _Progress {
 abstract class _Progress implements Progress {
   const factory _Progress(
       {required final Map<String, LessonProgress> lessons,
-      required final Map<String, SrsBox> srsByWord,
+      required final Map<String, SrsBox> srsByItem,
       required final Set<String> earnedStickerIds,
       required final int schemaVersion,
       required final DateTime lastPlayed,
@@ -281,7 +281,7 @@ abstract class _Progress implements Progress {
   @override
   Map<String, LessonProgress> get lessons;
   @override
-  Map<String, SrsBox> get srsByWord;
+  Map<String, SrsBox> get srsByItem;
   @override
   Set<String> get earnedStickerIds;
   @override

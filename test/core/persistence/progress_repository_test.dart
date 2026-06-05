@@ -1,8 +1,10 @@
 import 'dart:io';
 
 import 'package:bambaruush/core/persistence/progress_repository.dart';
+import 'package:bambaruush/models/item.dart';
 import 'package:bambaruush/models/lesson_progress.dart';
 import 'package:bambaruush/models/progress.dart';
+import 'package:bambaruush/models/srs_box.dart';
 import 'package:flutter_test/flutter_test.dart';
 
 void main() {
@@ -21,7 +23,7 @@ void main() {
   test('load returns Progress.empty() when file missing', () async {
     final p = await repo.load();
     expect(p.lessons, isEmpty);
-    expect(p.schemaVersion, 1);
+    expect(p.schemaVersion, 2);
   });
 
   test('save then load round-trips', () async {
@@ -51,11 +53,30 @@ void main() {
 
   test('schema version mismatch is treated as fresh start', () async {
     final f = File('${tmp.path}/progress.json');
-    await f.writeAsString('{"schemaVersion": 999, "lessons": {}, "srsByWord": {}, '
+    await f.writeAsString('{"schemaVersion": 999, "lessons": {}, "srsByItem": {}, '
         '"earnedStickerIds": [], "lastPlayed": "2026-05-27T00:00:00.000Z"}');
     final loaded = await repo.load();
-    expect(loaded.schemaVersion, 1);
+    expect(loaded.schemaVersion, 2);
     expect(loaded.lessons, isEmpty);
+  });
+
+  test('srsByItem round-trips a box with its itemType', () async {
+    final original = Progress.empty().copyWith(
+      srsByItem: {
+        'letter:letter_a': SrsBox(
+          itemId: 'letter_a',
+          itemType: ItemType.letter,
+          level: 3,
+          nextReviewAt: DateTime.utc(2026, 6, 10),
+          correctStreak: 2,
+        ),
+      },
+    );
+    await repo.save(original);
+    final loaded = await repo.load();
+    final box = loaded.srsByItem['letter:letter_a']!;
+    expect(box.itemType, ItemType.letter);
+    expect(box.level, 3);
   });
 
   test('reset deletes the file', () async {

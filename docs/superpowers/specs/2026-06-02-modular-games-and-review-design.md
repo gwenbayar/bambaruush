@@ -171,10 +171,11 @@ For Slice 1, introducing the abstractions is required; a full directory move is 
 |---|---|---|
 | **1** | **Decouple games → Activity/Session/SessionRunner; add `Lesson.kind`; My Family becomes vocabulary-only; move distractors into the session; fix the tile avatar for vocab lessons. No new visible feature; identical UX except My Family has no А Intro/Trace.** | **NOW (demo)** |
 | 2 | **Localization-ready content model:** split per-language `text`/`audio` into a `localizations` map + `activeLanguage` selector; code reads `word.text(lang)`. Done while content is tiny. Vocabulary becomes plug-and-play across languages; alphabet/audio caveats per §5. | Next (right after demo) |
-| 3 | Generalize SRS to items; seed letters into SRS on letter lessons; `srsByItem` + `lastWarmupAt`; schemaVersion bump. | After Slice 2 |
+| 3 | Generalize SRS to items: `abstract interface class Item` + `ItemType` enum (Word/Letter implement it); `srsByItem` keyed `"type:id"`; letters get SRS via the Trace signal (`SessionRunner.itemCorrectness`); track-everything; schemaVersion bump. See `docs/superpowers/specs/2026-06-03-srs-items-design.md`. | After Slice 2 |
 | 4 | `ReviewSession` + `reviewQueueProvider` + Practice landmark (`/review`, due badge). | After Slice 3 |
-| 5 | Optional daily warm-up (`/warmup`, once/day, reward). | After Slice 4 |
+| 5 | Optional daily warm-up (`/warmup`, once/day, reward) + `lastWarmupAt` on `Progress`. | After Slice 4 |
 | 6 | Character rig (slots/actions) + advanced games (dress-up, walk-to-place, match-to-character). | Long-run |
+| 7 | **Item sub-categories** — `LetterCategory{vowel, consonant}` on `Letter`, word groups/themes on `Word` (enum fields on the subtypes). Deferred from Slice 3; build when an activity/review uses them. | Feature-driven |
 
 ## 13. Demo scope (Slice 1) — exact changes built now
 
