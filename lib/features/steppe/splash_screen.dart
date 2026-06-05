@@ -2,6 +2,10 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 
+import '../../core/providers.dart';
+import '../review/review_queue.dart';
+import '../warmup/warmup_logic.dart';
+
 class SplashScreen extends ConsumerStatefulWidget {
   const SplashScreen({super.key});
   @override
@@ -14,7 +18,18 @@ class _SplashScreenState extends ConsumerState<SplashScreen> {
     super.initState();
     WidgetsBinding.instance.addPostFrameCallback((_) async {
       await Future<void>.delayed(const Duration(milliseconds: 300));
-      if (mounted) context.go('/steppe');
+      if (!mounted) return;
+      final progress = ref.read(progressControllerProvider);
+      final hasPracticeItems = ref.read(reviewQueueProvider).isNotEmpty ||
+          ref.read(freePracticeProvider).isNotEmpty;
+      final destination = shouldOfferWarmup(
+        lastWarmupAt: progress.lastWarmupAt,
+        now: DateTime.now(),
+        hasPracticeItems: hasPracticeItems,
+      )
+          ? '/warmup'
+          : '/steppe';
+      if (mounted) context.go(destination);
     });
   }
 

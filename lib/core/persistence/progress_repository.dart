@@ -11,7 +11,7 @@ class ProgressRepository implements ProgressStore {
 
   final File _file;
 
-  static const _currentSchemaVersion = 2;
+  static const _currentSchemaVersion = 3;
 
   @override
   Future<Progress> load() async {

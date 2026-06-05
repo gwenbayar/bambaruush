@@ -20,3 +20,12 @@ Sun, moon, star
 
 
 We can keep a dictionary of words that map to english so that we can recreate it using any language
+
+
+Game virtues:
+No unhealthy systems set up for kids - no streaks, no negative incentive, no gambling addiction
+Based on research backed healthy and positive rewards - has to be engaging and well made for this to work i think
+engaging story
+rich art and supporting asssets
+
+NO streaks: just unique stickers, idk how to create them on the spot tho hmmm

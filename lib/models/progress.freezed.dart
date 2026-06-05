@@ -26,6 +26,8 @@ mixin _$Progress {
   int get schemaVersion => throw _privateConstructorUsedError;
   DateTime get lastPlayed => throw _privateConstructorUsedError;
   double get volume => throw _privateConstructorUsedError;
+  DateTime? get lastWarmupAt => throw _privateConstructorUsedError;
+  int get warmupCount => throw _privateConstructorUsedError;
 
   /// Serializes this Progress to a JSON map.
   Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
@@ -48,7 +50,9 @@ abstract class $ProgressCopyWith<$Res> {
       Set<String> earnedStickerIds,
       int schemaVersion,
       DateTime lastPlayed,
-      double volume});
+      double volume,
+      DateTime? lastWarmupAt,
+      int warmupCount});
 }
 
 /// @nodoc
@@ -72,6 +76,8 @@ class _$ProgressCopyWithImpl<$Res, $Val extends Progress>
     Object? schemaVersion = null,
     Object? lastPlayed = null,
     Object? volume = null,
+    Object? lastWarmupAt = freezed,
+    Object? warmupCount = null,
   }) {
     return _then(_value.copyWith(
       lessons: null == lessons
@@ -98,6 +104,14 @@ class _$ProgressCopyWithImpl<$Res, $Val extends Progress>
           ? _value.volume
           : volume // ignore: cast_nullable_to_non_nullable
               as double,
+      lastWarmupAt: freezed == lastWarmupAt
+          ? _value.lastWarmupAt
+          : lastWarmupAt // ignore: cast_nullable_to_non_nullable
+              as DateTime?,
+      warmupCount: null == warmupCount
+          ? _value.warmupCount
+          : warmupCount // ignore: cast_nullable_to_non_nullable
+              as int,
     ) as $Val);
   }
 }
@@ -116,7 +130,9 @@ abstract class _$$ProgressImplCopyWith<$Res>
       Set<String> earnedStickerIds,
       int schemaVersion,
       DateTime lastPlayed,
-      double volume});
+      double volume,
+      DateTime? lastWarmupAt,
+      int warmupCount});
 }
 
 /// @nodoc
@@ -138,6 +154,8 @@ class __$$ProgressImplCopyWithImpl<$Res>
     Object? schemaVersion = null,
     Object? lastPlayed = null,
     Object? volume = null,
+    Object? lastWarmupAt = freezed,
+    Object? warmupCount = null,
   }) {
     return _then(_$ProgressImpl(
       lessons: null == lessons
@@ -164,6 +182,14 @@ class __$$ProgressImplCopyWithImpl<$Res>
           ? _value.volume
           : volume // ignore: cast_nullable_to_non_nullable
               as double,
+      lastWarmupAt: freezed == lastWarmupAt
+          ? _value.lastWarmupAt
+          : lastWarmupAt // ignore: cast_nullable_to_non_nullable
+              as DateTime?,
+      warmupCount: null == warmupCount
+          ? _value.warmupCount
+          : warmupCount // ignore: cast_nullable_to_non_nullable
+              as int,
     ));
   }
 }
@@ -177,7 +203,9 @@ class _$ProgressImpl implements _Progress {
       required final Set<String> earnedStickerIds,
       required this.schemaVersion,
       required this.lastPlayed,
-      this.volume = 1.0})
+      this.volume = 1.0,
+      this.lastWarmupAt,
+      this.warmupCount = 0})
       : _lessons = lessons,
         _srsByItem = srsByItem,
         _earnedStickerIds = earnedStickerIds;
@@ -216,10 +244,15 @@ class _$ProgressImpl implements _Progress {
   @override
   @JsonKey()
   final double volume;
+  @override
+  final DateTime? lastWarmupAt;
+  @override
+  @JsonKey()
+  final int warmupCount;
 
   @override
   String toString() {
-    return 'Progress(lessons: $lessons, srsByItem: $srsByItem, earnedStickerIds: $earnedStickerIds, schemaVersion: $schemaVersion, lastPlayed: $lastPlayed, volume: $volume)';
+    return 'Progress(lessons: $lessons, srsByItem: $srsByItem, earnedStickerIds: $earnedStickerIds, schemaVersion: $schemaVersion, lastPlayed: $lastPlayed, volume: $volume, lastWarmupAt: $lastWarmupAt, warmupCount: $warmupCount)';
   }
 
   @override
@@ -236,7 +269,11 @@ class _$ProgressImpl implements _Progress {
                 other.schemaVersion == schemaVersion) &&
             (identical(other.lastPlayed, lastPlayed) ||
                 other.lastPlayed == lastPlayed) &&
-            (identical(other.volume, volume) || other.volume == volume));
+            (identical(other.volume, volume) || other.volume == volume) &&
+            (identical(other.lastWarmupAt, lastWarmupAt) ||
+                other.lastWarmupAt == lastWarmupAt) &&
+            (identical(other.warmupCount, warmupCount) ||
+                other.warmupCount == warmupCount));
   }
 
   @JsonKey(includeFromJson: false, includeToJson: false)
@@ -248,7 +285,9 @@ class _$ProgressImpl implements _Progress {
       const DeepCollectionEquality().hash(_earnedStickerIds),
       schemaVersion,
       lastPlayed,
-      volume);
+      volume,
+      lastWarmupAt,
+      warmupCount);
 
   /// Create a copy of Progress
   /// with the given fields replaced by the non-null parameter values.
@@ -273,7 +312,9 @@ abstract class _Progress implements Progress {
       required final Set<String> earnedStickerIds,
       required final int schemaVersion,
       required final DateTime lastPlayed,
-      final double volume}) = _$ProgressImpl;
+      final double volume,
+      final DateTime? lastWarmupAt,
+      final int warmupCount}) = _$ProgressImpl;
 
   factory _Progress.fromJson(Map<String, dynamic> json) =
       _$ProgressImpl.fromJson;
@@ -290,6 +331,10 @@ abstract class _Progress implements Progress {
   DateTime get lastPlayed;
   @override
   double get volume;
+  @override
+  DateTime? get lastWarmupAt;
+  @override
+  int get warmupCount;
 
   /// Create a copy of Progress
   /// with the given fields replaced by the non-null parameter values.

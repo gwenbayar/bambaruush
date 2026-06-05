@@ -21,6 +21,10 @@ _$ProgressImpl _$$ProgressImplFromJson(Map<String, dynamic> json) =>
       schemaVersion: (json['schemaVersion'] as num).toInt(),
       lastPlayed: DateTime.parse(json['lastPlayed'] as String),
       volume: (json['volume'] as num?)?.toDouble() ?? 1.0,
+      lastWarmupAt: json['lastWarmupAt'] == null
+          ? null
+          : DateTime.parse(json['lastWarmupAt'] as String),
+      warmupCount: (json['warmupCount'] as num?)?.toInt() ?? 0,
     );
 
 Map<String, dynamic> _$$ProgressImplToJson(_$ProgressImpl instance) =>
@@ -31,4 +35,6 @@ Map<String, dynamic> _$$ProgressImplToJson(_$ProgressImpl instance) =>
       'schemaVersion': instance.schemaVersion,
       'lastPlayed': instance.lastPlayed.toIso8601String(),
       'volume': instance.volume,
+      'lastWarmupAt': instance.lastWarmupAt?.toIso8601String(),
+      'warmupCount': instance.warmupCount,
     };
