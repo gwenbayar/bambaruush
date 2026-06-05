@@ -2,6 +2,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 
 import '../../features/lesson/lesson_runner_screen.dart';
+import '../../features/review/review_runner_screen.dart';
 import '../../features/settings/parent_gate_screen.dart';
 import '../../features/settings/settings_screen.dart';
 import '../../features/steppe/region_detail_screen.dart';
@@ -25,6 +26,7 @@ final appRouterProvider = Provider<GoRouter>((ref) {
         builder: (_, state) =>
             LessonRunnerScreen(lessonId: state.pathParameters['id']!),
       ),
+      GoRoute(path: '/review', builder: (_, __) => const ReviewRunnerScreen()),
       GoRoute(path: '/album', builder: (_, __) => const StickerAlbumScreen()),
       GoRoute(path: '/settings/gate', builder: (_, __) => const ParentGateScreen()),
       GoRoute(path: '/settings', builder: (_, __) => const SettingsScreen()),

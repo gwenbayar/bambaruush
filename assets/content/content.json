@@ -4,19 +4,19 @@
     { "id": "region_yurt", "nameEn": "Ger", "nameMn": "Гэр", "order": 1, "mapImagePath": "region_yurt.png", "mapPosition": [0.5, 0.63] }
   ],
   "letters": [
-    { "id": "letter_a", "cyrillic": "А", "romanization": "A", "audio": "letter_a.mp3", "traceMask": "letter_a.png" },
-    { "id": "letter_b", "cyrillic": "Б", "romanization": "B", "audio": "letter_b.mp3", "traceMask": "letter_b.png" },
-    { "id": "letter_e", "cyrillic": "Э", "romanization": "E", "audio": "letter_e.mp3", "traceMask": "letter_e.png" },
-    { "id": "letter_d", "cyrillic": "Д", "romanization": "D", "audio": "letter_d.mp3", "traceMask": "letter_d.png" }
+    { "id": "letter_a", "cyrillic": "А", "romanization": "A", "audio": "letter_a.m4a", "traceMask": "letter_a.png" },
+    { "id": "letter_b", "cyrillic": "Б", "romanization": "B", "audio": "letter_b.m4a", "traceMask": "letter_b.png" },
+    { "id": "letter_e", "cyrillic": "Э", "romanization": "E", "audio": "letter_e.m4a", "traceMask": "letter_e.png" },
+    { "id": "letter_d", "cyrillic": "Д", "romanization": "D", "audio": "letter_d.m4a", "traceMask": "letter_d.png" }
   ],
   "words": [
-    { "id": "word_aav", "image": "word_aav.png", "letterIds": ["letter_a"], "localizations": { "mn": {"text": "Аав", "audio": "word_aav.mp3"}, "en": {"text": "father"} } },
-    { "id": "word_eej", "image": "word_eej.png", "letterIds": ["letter_e"], "localizations": { "mn": {"text": "Ээж", "audio": "word_eej.mp3"}, "en": {"text": "mother"} } },
-    { "id": "word_akh", "image": "word_akh.png", "letterIds": ["letter_a"], "localizations": { "mn": {"text": "Ах", "audio": "word_akh.mp3"}, "en": {"text": "older brother"} } },
-    { "id": "word_egch", "image": "word_egch.png", "letterIds": ["letter_e"], "localizations": { "mn": {"text": "Эгч", "audio": "word_egch.mp3"}, "en": {"text": "older sister"} } },
-    { "id": "word_duu", "image": "word_duu.png", "letterIds": ["letter_d"], "localizations": { "mn": {"text": "Дүү", "audio": "word_duu.mp3"}, "en": {"text": "little sibling"} } },
-    { "id": "word_bombog", "image": "word_bombog.png", "letterIds": ["letter_b"], "localizations": { "mn": {"text": "Бөмбөг", "audio": "word_bombog.mp3"}, "en": {"text": "ball"} } },
-    { "id": "word_bar", "image": "word_bar.png", "letterIds": ["letter_b"], "localizations": { "mn": {"text": "Бар", "audio": "word_bar.mp3"}, "en": {"text": "tiger"} } }
+    { "id": "word_aav", "image": "word_aav.png", "letterIds": ["letter_a"], "localizations": { "mn": {"text": "Аав", "audio": "word_aav.m4a"}, "en": {"text": "father"} } },
+    { "id": "word_eej", "image": "word_eej.png", "letterIds": ["letter_e"], "localizations": { "mn": {"text": "Ээж", "audio": "word_eej.m4a"}, "en": {"text": "mother"} } },
+    { "id": "word_akh", "image": "word_akh.png", "letterIds": ["letter_a"], "localizations": { "mn": {"text": "Ах", "audio": "word_akh.m4a"}, "en": {"text": "older brother"} } },
+    { "id": "word_egch", "image": "word_egch.png", "letterIds": ["letter_e"], "localizations": { "mn": {"text": "Эгч", "audio": "word_egch.m4a"}, "en": {"text": "older sister"} } },
+    { "id": "word_duu", "image": "word_duu.png", "letterIds": ["letter_d"], "localizations": { "mn": {"text": "Дүү", "audio": "word_duu.m4a"}, "en": {"text": "little sibling"} } },
+    { "id": "word_bombog", "image": "word_bombog.png", "letterIds": ["letter_b"], "localizations": { "mn": {"text": "Бөмбөг", "audio": "word_bombog.m4a"}, "en": {"text": "ball"} } },
+    { "id": "word_bar", "image": "word_bar.png", "letterIds": ["letter_b"], "localizations": { "mn": {"text": "Бар", "audio": "word_bar.m4a"}, "en": {"text": "tiger"} } }
   ],
   "lessons": [
     { "id": "lesson_family", "order": 1, "title": "My Family", "kind": "vocabulary", "regionId": "region_yurt", "letterIds": [], "wordIds": ["word_aav", "word_eej", "word_akh", "word_egch", "word_duu"], "stickerId": "sticker_family" },

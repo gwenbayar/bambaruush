@@ -8,12 +8,17 @@ import '../../core/providers.dart';
 import '../../theme/app_theme.dart';
 import '../../widgets/press_scale.dart';
 import '../mascot/mascot_overlay.dart';
+import '../review/review_queue.dart';
 
 // Intrinsic size of assets/images/steppe_map_kids.png. Used to map a region's
 // image-normalized mapPosition onto the BoxFit.cover-displayed image, so tiles
 // stay pinned to landmarks (the ger) regardless of the phone's aspect ratio.
 const double _kMapImageWidth = 714;
 const double _kMapImageHeight = 1280;
+
+// Practice landmark anchor (image-normalized, lower-left, clear of the Ger at
+// [0.5, 0.63]). Nudge to taste like the region tiles.
+const Offset _kPracticeAnchor = Offset(0.22, 0.82);
 
 class SteppeMapScreen extends ConsumerWidget {
   const SteppeMapScreen({super.key});
@@ -22,6 +27,7 @@ class SteppeMapScreen extends ConsumerWidget {
   Widget build(BuildContext context, WidgetRef ref) {
     final content = ref.watch(contentRepositoryProvider);
     final progress = ref.watch(progressControllerProvider);
+    final dueCount = ref.watch(reviewQueueProvider).length;
 
     return Scaffold(
       appBar: AppBar(
@@ -90,6 +96,17 @@ class SteppeMapScreen extends ConsumerWidget {
                     ),
                   ),
                 ),
+              Positioned(
+                left: offsetX + _kPracticeAnchor.dx * dispW,
+                top: offsetY + _kPracticeAnchor.dy * dispH,
+                child: FractionalTranslation(
+                  translation: const Offset(-0.5, -0.5),
+                  child: _PracticeLandmark(
+                    dueCount: dueCount,
+                    onTap: () => context.push('/review'),
+                  ),
+                ),
+              ),
               const MascotOverlay(),
             ],
           );
@@ -156,6 +173,75 @@ class _RegionTile extends StatelessWidget {
             ],
           ],
         ),
+      ),
+    );
+  }
+}
+
+class _PracticeLandmark extends StatelessWidget {
+  const _PracticeLandmark({required this.dueCount, required this.onTap});
+
+  /// Number of items due for review; shows a badge when > 0.
+  final int dueCount;
+  final VoidCallback onTap;
+
+  @override
+  Widget build(BuildContext context) {
+    return PressScale(
+      onTap: onTap,
+      pressedScale: 0.95,
+      child: Stack(
+        clipBehavior: Clip.none,
+        children: [
+          Container(
+            padding: const EdgeInsets.symmetric(horizontal: 14, vertical: 10),
+            decoration: BoxDecoration(
+              color: Colors.white,
+              borderRadius: BorderRadius.circular(AppRadii.tile),
+              border: Border.all(color: AppColors.cardBorder, width: 2),
+              boxShadow: const [kSoftShadow],
+            ),
+            child: const Column(
+              mainAxisSize: MainAxisSize.min,
+              children: [
+                Icon(Icons.auto_stories_rounded, size: 28, color: AppColors.ink),
+                SizedBox(height: 2),
+                Text(
+                  'Practice',
+                  style: TextStyle(
+                    fontFamily: AppFonts.display,
+                    fontWeight: FontWeight.bold,
+                    fontSize: 14,
+                    color: AppColors.ink,
+                  ),
+                ),
+              ],
+            ),
+          ),
+          if (dueCount > 0)
+            Positioned(
+              top: -6,
+              right: -6,
+              child: Container(
+                padding: const EdgeInsets.symmetric(horizontal: 7, vertical: 3),
+                constraints: const BoxConstraints(minWidth: 22),
+                decoration: BoxDecoration(
+                  color: AppColors.coral,
+                  borderRadius: BorderRadius.circular(12),
+                  border: Border.all(color: Colors.white, width: 2),
+                ),
+                child: Text(
+                  dueCount > 9 ? '9+' : '$dueCount',
+                  textAlign: TextAlign.center,
+                  style: const TextStyle(
+                    color: Colors.white,
+                    fontWeight: FontWeight.bold,
+                    fontSize: 12,
+                  ),
+                ),
+              ),
+            ),
+        ],
       ),
     );
   }
