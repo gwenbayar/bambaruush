@@ -7,14 +7,10 @@ import '../../models/lesson.dart';
 import '../../models/lesson_progress.dart';
 import '../mascot/mascot_overlay.dart';
 import 'activity_spec.dart';
-import 'intro_activity.dart';
+import 'activity_view.dart';
 import 'lesson_session.dart';
-import 'listen_activity.dart';
-import 'read_activity.dart';
-import 'reward_activity.dart';
 import 'session_runner.dart';
 import 'srs_update.dart';
-import 'trace_activity.dart';
 
 final lessonRunnerProvider = StateNotifierProvider.autoDispose
     .family<SessionRunner, SessionRunnerState, Lesson>((ref, lesson) {
@@ -66,7 +62,7 @@ class LessonRunnerScreen extends ConsumerWidget {
         ),
         body: Stack(
           children: [
-            _activityWidget(state, runner),
+            ActivityView(spec: state.current, runner: runner),
             Positioned(
               top: 8,
               left: 16,
@@ -82,34 +78,6 @@ class LessonRunnerScreen extends ConsumerWidget {
         ),
       ),
     );
-  }
-
-  Widget _activityWidget(SessionRunnerState s, SessionRunner r) {
-    final spec = s.current;
-    if (spec is IntroSpec) {
-      return IntroActivityView(spec: spec, onContinue: () => r.advance(correct: true));
-    }
-    if (spec is TraceSpec) {
-      return TraceActivityView(spec: spec, onResult: r.advance);
-    }
-    if (spec is ListenSpec) {
-      return ListenActivityView(
-        key: ValueKey('listen-${spec.wordId}-${spec.attempt}'),
-        spec: spec,
-        onResult: r.advance,
-      );
-    }
-    if (spec is ReadSpec) {
-      return ReadActivityView(
-        key: ValueKey('read-${spec.wordId}-${spec.attempt}'),
-        spec: spec,
-        onResult: r.advance,
-      );
-    }
-    if (spec is RewardSpec) {
-      return RewardActivityView(spec: spec, onContinue: () => r.advance(correct: true));
-    }
-    return const SizedBox.shrink();
   }
 
   Future<bool> _confirmQuit(BuildContext context) async {

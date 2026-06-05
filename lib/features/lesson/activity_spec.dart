@@ -46,3 +46,10 @@ class RewardSpec extends ActivitySpec {
 class SessionComplete extends ActivitySpec {
   const SessionComplete();
 }
+
+/// Presentational end-of-review celebration (no album sticker). Last step of a
+/// ReviewSession sequence; shows how many items were practiced.
+class ReviewCompleteSpec extends ActivitySpec {
+  const ReviewCompleteSpec({required this.reviewedCount});
+  final int reviewedCount;
+}

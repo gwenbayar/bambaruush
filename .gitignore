@@ -20,3 +20,5 @@ build/
 #   .metadata             - Flutter project metadata
 #   docs/                 - design specs + game_ideas.md (your roadmap)
 #   assets/               - real content, including assets/images/original_images/ (source art)
+
+coverage/
