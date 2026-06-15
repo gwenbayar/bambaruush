@@ -63,5 +63,16 @@
       "image": "sticker_ball.png",
       "nameEn": "Ball"
     }
+  ],
+  "constellations": [
+    {
+      "id": "doloon_burhan",
+      "nameEn": "The Big Dipper",
+      "nameMn": "Долоон бурхан",
+      "order": 1,
+      "slots": [[0.20,0.30],[0.32,0.34],[0.44,0.40],[0.57,0.44],[0.70,0.40],[0.72,0.56],[0.58,0.58]],
+      "shapeImage": "ladle.png",
+      "trivia": "In Mongolia this is Долоон бурхан — 'the seven gods.' Some people also call it Шанага Долоо, the Ladle Seven, because it looks like a ladle for scooping."
+    }
   ]
 }

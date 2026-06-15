@@ -1,6 +1,4 @@
 import 'package:bambaruush/features/warmup/warmup_logic.dart';
-import 'package:bambaruush/models/item.dart';
-import 'package:bambaruush/models/progress.dart';
 import 'package:flutter_test/flutter_test.dart';
 
 void main() {
@@ -68,29 +66,4 @@ void main() {
     });
   });
 
-  group('applyWarmupCompletion', () {
-    test(
-        'updates SRS, bumps warmupCount, stamps dates; leaves lessons/stickers',
-        () {
-      final start = Progress.empty(now: DateTime(2026, 6, 1)).copyWith(
-        warmupCount: 2,
-        earnedStickerIds: {'sticker_a'},
-      );
-      final next = applyWarmupCompletion(
-        current: start,
-        itemCorrectness: {'word:word_aav': true},
-        now: now,
-      );
-      expect(next.warmupCount, 3);
-      expect(next.lastWarmupAt, now);
-      expect(next.lastPlayed, now);
-      expect(next.earnedStickerIds, {'sticker_a'}); // untouched (no reward yet)
-      expect(next.lessons, isEmpty); // untouched
-      expect(next.srsByItem.containsKey('word:word_aav'), isTrue);
-      final box = next.srsByItem['word:word_aav']!;
-      expect(box.itemId, 'word_aav');
-      expect(box.itemType, ItemType.word);
-      expect(box.level, 2); // a correct first attempt advanced the box (onCorrect)
-    });
-  });
 }

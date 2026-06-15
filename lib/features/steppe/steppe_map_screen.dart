@@ -107,6 +107,14 @@ class SteppeMapScreen extends ConsumerWidget {
                   ),
                 ),
               ),
+              Positioned(
+                top: 12,
+                left: 12,
+                child: _SkyStarChip(
+                  count: progress.skyStarItemKeys.length,
+                  onTap: () => context.push('/sky'),
+                ),
+              ),
               const MascotOverlay(),
             ],
           );
@@ -163,14 +171,53 @@ class _RegionTile extends StatelessWidget {
                   for (final completed in lessonCompletions)
                     Icon(
                       completed
-                          ? Icons.star_rounded
-                          : Icons.star_outline_rounded,
+                          ? Icons.check_circle_rounded
+                          : Icons.radio_button_unchecked,
                       size: 14,
-                      color: completed ? AppColors.sun : AppColors.inkSoft,
+                      color: completed ? AppColors.meadow : AppColors.inkSoft,
                     ),
                 ],
               ),
             ],
+          ],
+        ),
+      ),
+    );
+  }
+}
+
+class _SkyStarChip extends StatelessWidget {
+  const _SkyStarChip({required this.count, required this.onTap});
+  final int count;
+  final VoidCallback onTap;
+
+  @override
+  Widget build(BuildContext context) {
+    return PressScale(
+      onTap: onTap,
+      pressedScale: 0.95,
+      child: Container(
+        padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 8),
+        decoration: BoxDecoration(
+          color: Colors.white,
+          borderRadius: BorderRadius.circular(AppRadii.tile),
+          border: Border.all(color: AppColors.cardBorder, width: 2),
+          boxShadow: const [kSoftShadow],
+        ),
+        child: Row(
+          mainAxisSize: MainAxisSize.min,
+          children: [
+            const Icon(Icons.star_rounded, color: AppColors.sun, size: 20),
+            const SizedBox(width: 6),
+            Text(
+              '$count',
+              style: const TextStyle(
+                fontFamily: AppFonts.display,
+                fontWeight: FontWeight.bold,
+                fontSize: 16,
+                color: AppColors.ink,
+              ),
+            ),
           ],
         ),
       ),

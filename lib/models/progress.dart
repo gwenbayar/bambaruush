@@ -17,6 +17,8 @@ class Progress with _$Progress {
     @Default(1.0) double volume,
     DateTime? lastWarmupAt,
     @Default(0) int warmupCount,
+    @Default(<String>[]) List<String> skyStarItemKeys,
+    @Default(<String>{}) Set<String> completedConstellationIds,
   }) = _Progress;
 
   factory Progress.fromJson(Map<String, dynamic> json) => _$ProgressFromJson(json);
@@ -25,7 +27,7 @@ class Progress with _$Progress {
         lessons: const {},
         srsByItem: const {},
         earnedStickerIds: const {},
-        schemaVersion: 3,
+        schemaVersion: 4,
         lastPlayed: now ?? DateTime.now(),
       );
 }

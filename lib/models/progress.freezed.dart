@@ -28,6 +28,9 @@ mixin _$Progress {
   double get volume => throw _privateConstructorUsedError;
   DateTime? get lastWarmupAt => throw _privateConstructorUsedError;
   int get warmupCount => throw _privateConstructorUsedError;
+  List<String> get skyStarItemKeys => throw _privateConstructorUsedError;
+  Set<String> get completedConstellationIds =>
+      throw _privateConstructorUsedError;
 
   /// Serializes this Progress to a JSON map.
   Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
@@ -52,7 +55,9 @@ abstract class $ProgressCopyWith<$Res> {
       DateTime lastPlayed,
       double volume,
       DateTime? lastWarmupAt,
-      int warmupCount});
+      int warmupCount,
+      List<String> skyStarItemKeys,
+      Set<String> completedConstellationIds});
 }
 
 /// @nodoc
@@ -78,6 +83,8 @@ class _$ProgressCopyWithImpl<$Res, $Val extends Progress>
     Object? volume = null,
     Object? lastWarmupAt = freezed,
     Object? warmupCount = null,
+    Object? skyStarItemKeys = null,
+    Object? completedConstellationIds = null,
   }) {
     return _then(_value.copyWith(
       lessons: null == lessons
@@ -112,6 +119,14 @@ class _$ProgressCopyWithImpl<$Res, $Val extends Progress>
           ? _value.warmupCount
           : warmupCount // ignore: cast_nullable_to_non_nullable
               as int,
+      skyStarItemKeys: null == skyStarItemKeys
+          ? _value.skyStarItemKeys
+          : skyStarItemKeys // ignore: cast_nullable_to_non_nullable
+              as List<String>,
+      completedConstellationIds: null == completedConstellationIds
+          ? _value.completedConstellationIds
+          : completedConstellationIds // ignore: cast_nullable_to_non_nullable
+              as Set<String>,
     ) as $Val);
   }
 }
@@ -132,7 +147,9 @@ abstract class _$$ProgressImplCopyWith<$Res>
       DateTime lastPlayed,
       double volume,
       DateTime? lastWarmupAt,
-      int warmupCount});
+      int warmupCount,
+      List<String> skyStarItemKeys,
+      Set<String> completedConstellationIds});
 }
 
 /// @nodoc
@@ -156,6 +173,8 @@ class __$$ProgressImplCopyWithImpl<$Res>
     Object? volume = null,
     Object? lastWarmupAt = freezed,
     Object? warmupCount = null,
+    Object? skyStarItemKeys = null,
+    Object? completedConstellationIds = null,
   }) {
     return _then(_$ProgressImpl(
       lessons: null == lessons
@@ -190,6 +209,14 @@ class __$$ProgressImplCopyWithImpl<$Res>
           ? _value.warmupCount
           : warmupCount // ignore: cast_nullable_to_non_nullable
               as int,
+      skyStarItemKeys: null == skyStarItemKeys
+          ? _value._skyStarItemKeys
+          : skyStarItemKeys // ignore: cast_nullable_to_non_nullable
+              as List<String>,
+      completedConstellationIds: null == completedConstellationIds
+          ? _value._completedConstellationIds
+          : completedConstellationIds // ignore: cast_nullable_to_non_nullable
+              as Set<String>,
     ));
   }
 }
@@ -205,10 +232,14 @@ class _$ProgressImpl implements _Progress {
       required this.lastPlayed,
       this.volume = 1.0,
       this.lastWarmupAt,
-      this.warmupCount = 0})
+      this.warmupCount = 0,
+      final List<String> skyStarItemKeys = const <String>[],
+      final Set<String> completedConstellationIds = const <String>{}})
       : _lessons = lessons,
         _srsByItem = srsByItem,
-        _earnedStickerIds = earnedStickerIds;
+        _earnedStickerIds = earnedStickerIds,
+        _skyStarItemKeys = skyStarItemKeys,
+        _completedConstellationIds = completedConstellationIds;
 
   factory _$ProgressImpl.fromJson(Map<String, dynamic> json) =>
       _$$ProgressImplFromJson(json);
@@ -249,10 +280,28 @@ class _$ProgressImpl implements _Progress {
   @override
   @JsonKey()
   final int warmupCount;
+  final List<String> _skyStarItemKeys;
+  @override
+  @JsonKey()
+  List<String> get skyStarItemKeys {
+    if (_skyStarItemKeys is EqualUnmodifiableListView) return _skyStarItemKeys;
+    // ignore: implicit_dynamic_type
+    return EqualUnmodifiableListView(_skyStarItemKeys);
+  }
+
+  final Set<String> _completedConstellationIds;
+  @override
+  @JsonKey()
+  Set<String> get completedConstellationIds {
+    if (_completedConstellationIds is EqualUnmodifiableSetView)
+      return _completedConstellationIds;
+    // ignore: implicit_dynamic_type
+    return EqualUnmodifiableSetView(_completedConstellationIds);
+  }
 
   @override
   String toString() {
-    return 'Progress(lessons: $lessons, srsByItem: $srsByItem, earnedStickerIds: $earnedStickerIds, schemaVersion: $schemaVersion, lastPlayed: $lastPlayed, volume: $volume, lastWarmupAt: $lastWarmupAt, warmupCount: $warmupCount)';
+    return 'Progress(lessons: $lessons, srsByItem: $srsByItem, earnedStickerIds: $earnedStickerIds, schemaVersion: $schemaVersion, lastPlayed: $lastPlayed, volume: $volume, lastWarmupAt: $lastWarmupAt, warmupCount: $warmupCount, skyStarItemKeys: $skyStarItemKeys, completedConstellationIds: $completedConstellationIds)';
   }
 
   @override
@@ -273,7 +322,11 @@ class _$ProgressImpl implements _Progress {
             (identical(other.lastWarmupAt, lastWarmupAt) ||
                 other.lastWarmupAt == lastWarmupAt) &&
             (identical(other.warmupCount, warmupCount) ||
-                other.warmupCount == warmupCount));
+                other.warmupCount == warmupCount) &&
+            const DeepCollectionEquality()
+                .equals(other._skyStarItemKeys, _skyStarItemKeys) &&
+            const DeepCollectionEquality().equals(
+                other._completedConstellationIds, _completedConstellationIds));
   }
 
   @JsonKey(includeFromJson: false, includeToJson: false)
@@ -287,7 +340,9 @@ class _$ProgressImpl implements _Progress {
       lastPlayed,
       volume,
       lastWarmupAt,
-      warmupCount);
+      warmupCount,
+      const DeepCollectionEquality().hash(_skyStarItemKeys),
+      const DeepCollectionEquality().hash(_completedConstellationIds));
 
   /// Create a copy of Progress
   /// with the given fields replaced by the non-null parameter values.
@@ -314,7 +369,9 @@ abstract class _Progress implements Progress {
       required final DateTime lastPlayed,
       final double volume,
       final DateTime? lastWarmupAt,
-      final int warmupCount}) = _$ProgressImpl;
+      final int warmupCount,
+      final List<String> skyStarItemKeys,
+      final Set<String> completedConstellationIds}) = _$ProgressImpl;
 
   factory _Progress.fromJson(Map<String, dynamic> json) =
       _$ProgressImpl.fromJson;
@@ -335,6 +392,10 @@ abstract class _Progress implements Progress {
   DateTime? get lastWarmupAt;
   @override
   int get warmupCount;
+  @override
+  List<String> get skyStarItemKeys;
+  @override
+  Set<String> get completedConstellationIds;
 
   /// Create a copy of Progress
   /// with the given fields replaced by the non-null parameter values.

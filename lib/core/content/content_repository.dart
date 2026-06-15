@@ -2,6 +2,7 @@ import 'dart:convert';
 
 import 'package:flutter/services.dart';
 
+import '../../models/constellation.dart';
 import '../../models/lesson.dart';
 import '../../models/letter.dart';
 import '../../models/region.dart';
@@ -23,6 +24,7 @@ class ContentRepository {
     required this.words,
     required this.lessons,
     required this.stickers,
+    required this.constellations,
     required Map<String, Lesson> lessonsById,
     required Map<int, Lesson> lessonsByOrder,
     required Map<String, Region> regionsById,
@@ -35,6 +37,7 @@ class ContentRepository {
   final Map<String, Word> words;
   final List<Lesson> lessons;
   final Map<String, Sticker> stickers;
+  final List<Constellation> constellations;
 
   final Map<String, Lesson> _lessonsById;
   final Map<int, Lesson> _lessonsByOrder;
@@ -45,6 +48,10 @@ class ContentRepository {
   static const _stickerImagePrefix = 'assets/images/stickers/';
   static const _regionImagePrefix = 'assets/images/regions/';
   static const _traceMaskPrefix = 'assets/trace_masks/';
+  // Intentionally flat (no subfolder) for now: keeps these images in the
+  // already-registered assets/images/ dir so no pubspec asset entry is needed
+  // before real art exists. Move to assets/images/constellations/ when added.
+  static const _constellationImagePrefix = 'assets/images/';
 
   Letter letterById(String id) =>
       letters[id] ?? (throw ContentValidationError('Unknown letter: $id'));
@@ -94,12 +101,18 @@ class ContentRepository {
     final stickerList = (json['stickers'] as List)
         .map((e) => _stickerFromRawJson(e as Map<String, dynamic>))
         .toList();
+    // Optional key. Constellations are added sparsely over time, so (unlike
+    // regions/lessons) their `order` is not contiguity-checked — only unique.
+    final constellationList = ((json['constellations'] as List?) ?? const [])
+        .map((e) => _constellationFromRawJson(e as Map<String, dynamic>))
+        .toList();
 
     _checkUniqueIds(regionList.map((e) => e.id), 'regions');
     _checkUniqueIds(letterList.map((e) => e.id), 'letters');
     _checkUniqueIds(wordList.map((e) => e.id), 'words');
     _checkUniqueIds(lessonList.map((e) => e.id), 'lessons');
     _checkUniqueIds(stickerList.map((e) => e.id), 'stickers');
+    _checkUniqueIds(constellationList.map((e) => e.id), 'constellations');
 
     final letters = {for (final l in letterList) l.id: l};
     final words = {for (final w in wordList) w.id: w};
@@ -156,12 +169,15 @@ class ContentRepository {
 
     final sortedLessons = lessonList..sort((a, b) => a.order.compareTo(b.order));
     final sortedRegions = regionList..sort((a, b) => a.order.compareTo(b.order));
+    final sortedConstellations = constellationList
+      ..sort((a, b) => a.order.compareTo(b.order));
     return ContentRepository._(
       regions: sortedRegions,
       letters: letters,
       words: words,
       lessons: sortedLessons,
       stickers: stickers,
+      constellations: sortedConstellations,
       lessonsById: {for (final l in sortedLessons) l.id: l},
       lessonsByOrder: {for (final l in sortedLessons) l.order: l},
       regionsById: {for (final r in sortedRegions) r.id: r},
@@ -209,6 +225,12 @@ class ContentRepository {
       localizations: localizations,
     );
   }
+
+  static Constellation _constellationFromRawJson(Map<String, dynamic> j) =>
+      Constellation.fromJson({
+        ...j,
+        'shapeImage': '$_constellationImagePrefix${j['shapeImage']}',
+      });
 
   static Sticker _stickerFromRawJson(Map<String, dynamic> j) => Sticker(
         id: j['id'] as String,

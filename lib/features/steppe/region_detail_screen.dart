@@ -229,7 +229,13 @@ class _Trailing extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     if (completed) {
-      return const Icon(Icons.star_rounded, color: AppColors.sun, size: 32);
+      // "star" is reserved for the sky-star track; lesson completion uses a
+      // distinct "done" marker (matches the steppe map's _RegionTile).
+      return const Icon(
+        Icons.check_circle_rounded,
+        color: AppColors.meadow,
+        size: 32,
+      );
     }
     if (unlocked) {
       return const Icon(
@@ -239,7 +245,7 @@ class _Trailing extends StatelessWidget {
       );
     }
     return const Icon(
-      Icons.star_outline_rounded,
+      Icons.lock_outline_rounded,
       color: AppColors.inkSoft,
       size: 32,
     );

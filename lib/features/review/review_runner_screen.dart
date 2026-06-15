@@ -9,9 +9,9 @@ import '../../widgets/candy_button.dart';
 import '../lesson/activity_spec.dart';
 import '../lesson/activity_view.dart';
 import '../lesson/session_runner.dart';
-import '../lesson/srs_update.dart';
 import '../mascot/mascot_overlay.dart';
-import '../warmup/warmup_logic.dart';
+import '../sky/sky_logic.dart';
+import '../sky/sky_reward_overlay.dart';
 import 'review_queue.dart';
 import 'review_session.dart';
 
@@ -121,10 +121,13 @@ class _RunningView extends ConsumerWidget {
 
     ref.listen<SessionRunnerState>(reviewRunnerProvider(mode), (prev, next) async {
       if (next.current is SessionComplete && prev?.current is! SessionComplete) {
-        if (_isWarmup) {
-          await _persistWarmup(ref, next);
-        } else {
-          await _persistReview(ref, next);
+        final rewards = await _persist(ref, next, isWarmup: _isWarmup);
+        if (context.mounted) {
+          await showSkyRewards(
+            context,
+            newStarCount: rewards.newStarKeys.length,
+            completedConstellations: rewards.completedConstellations,
+          );
         }
         if (context.mounted) _exit(context);
       }
@@ -167,28 +170,24 @@ class _RunningView extends ConsumerWidget {
   }
 }
 
-Future<void> _persistReview(WidgetRef ref, SessionRunnerState s) async {
+/// Persist a finished review (or warm-up) through the shared sky-reward
+/// orchestrator. Warm-up additionally bumps warmupCount + stamps lastWarmupAt.
+Future<SessionRewards> _persist(
+  WidgetRef ref,
+  SessionRunnerState s, {
+  bool isWarmup = false,
+}) async {
   final progress = ref.read(progressControllerProvider);
-  final now = DateTime.now();
-  final newSrs = applySessionToSrs(
-    current: progress.srsByItem,
+  final content = ref.read(contentRepositoryProvider);
+  final rewards = applySessionRewards(
+    current: progress,
     itemCorrectness: s.itemCorrectness,
-    now: now,
+    now: DateTime.now(),
+    content: content,
+    isWarmup: isWarmup,
   );
-  await ref.read(progressControllerProvider.notifier).update(
-        progress.copyWith(srsByItem: newSrs, lastPlayed: now),
-      );
-}
-
-Future<void> _persistWarmup(WidgetRef ref, SessionRunnerState s) async {
-  final progress = ref.read(progressControllerProvider);
-  await ref.read(progressControllerProvider.notifier).update(
-        applyWarmupCompletion(
-          current: progress,
-          itemCorrectness: s.itemCorrectness,
-          now: DateTime.now(),
-        ),
-      );
+  await ref.read(progressControllerProvider.notifier).update(rewards.progress);
+  return rewards;
 }
 
 Future<bool> _confirmQuit(BuildContext context) async {
