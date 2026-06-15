@@ -29,3 +29,7 @@ engaging story
 rich art and supporting asssets
 
 NO streaks: just unique stickers, idk how to create them on the spot tho hmmm
+
+Reward system needs to be better:
+- stickers
+- Bean house, assets you can purchase

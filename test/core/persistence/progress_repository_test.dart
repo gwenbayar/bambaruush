@@ -23,7 +23,7 @@ void main() {
   test('load returns Progress.empty() when file missing', () async {
     final p = await repo.load();
     expect(p.lessons, isEmpty);
-    expect(p.schemaVersion, 3);
+    expect(p.schemaVersion, 4);
   });
 
   test('save then load round-trips', () async {
@@ -56,7 +56,7 @@ void main() {
     await f.writeAsString('{"schemaVersion": 999, "lessons": {}, "srsByItem": {}, '
         '"earnedStickerIds": [], "lastPlayed": "2026-05-27T00:00:00.000Z"}');
     final loaded = await repo.load();
-    expect(loaded.schemaVersion, 3);
+    expect(loaded.schemaVersion, 4);
     expect(loaded.lessons, isEmpty);
   });
 
@@ -86,7 +86,7 @@ void main() {
     final loaded = await repo.load();
     expect(loaded.lastWarmupAt, now);
     expect(loaded.warmupCount, 4);
-    expect(loaded.schemaVersion, 3);
+    expect(loaded.schemaVersion, 4);
   });
 
   test('preserves default lastWarmupAt (null) and warmupCount (0)', () async {
@@ -95,7 +95,24 @@ void main() {
     final loaded = await repo.load();
     expect(loaded.lastWarmupAt, isNull);
     expect(loaded.warmupCount, 0);
-    expect(loaded.schemaVersion, 3);
+    expect(loaded.schemaVersion, 4);
+  });
+
+  test('round-trips skyStarItemKeys and completedConstellationIds', () async {
+    final p = Progress.empty().copyWith(
+      skyStarItemKeys: ['word:word_aav', 'letter:letter_a'],
+      completedConstellationIds: {'doloon_burhan'},
+    );
+    await repo.save(p);
+    final loaded = await repo.load();
+    expect(loaded.skyStarItemKeys, orderedEquals(['word:word_aav', 'letter:letter_a']));
+    expect(loaded.completedConstellationIds, unorderedEquals({'doloon_burhan'}));
+  });
+
+  test('fresh start defaults sky fields to empty', () async {
+    final p = await repo.load();
+    expect(p.skyStarItemKeys, isEmpty);
+    expect(p.completedConstellationIds, isEmpty);
   });
 
   test('reset deletes the file', () async {

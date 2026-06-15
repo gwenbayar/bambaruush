@@ -6,11 +6,12 @@ import '../../core/providers.dart';
 import '../../models/lesson.dart';
 import '../../models/lesson_progress.dart';
 import '../mascot/mascot_overlay.dart';
+import '../sky/sky_logic.dart';
+import '../sky/sky_reward_overlay.dart';
 import 'activity_spec.dart';
 import 'activity_view.dart';
 import 'lesson_session.dart';
 import 'session_runner.dart';
-import 'srs_update.dart';
 
 final lessonRunnerProvider = StateNotifierProvider.autoDispose
     .family<SessionRunner, SessionRunnerState, Lesson>((ref, lesson) {
@@ -34,7 +35,14 @@ class LessonRunnerScreen extends ConsumerWidget {
       lessonRunnerProvider(lesson),
       (prev, next) async {
         if (next.current is SessionComplete && prev?.current is! SessionComplete) {
-          await _persistCompletion(ref, lesson, next);
+          final rewards = await _persistCompletion(ref, lesson, next);
+          if (context.mounted) {
+            await showSkyRewards(
+              context,
+              newStarCount: rewards.newStarKeys.length,
+              completedConstellations: rewards.completedConstellations,
+            );
+          }
           if (context.mounted) context.pop();
         }
       },
@@ -101,7 +109,7 @@ class LessonRunnerScreen extends ConsumerWidget {
     return result ?? false;
   }
 
-  Future<void> _persistCompletion(
+  Future<SessionRewards> _persistCompletion(
     WidgetRef ref,
     Lesson lesson,
     SessionRunnerState s,
@@ -111,10 +119,11 @@ class LessonRunnerScreen extends ConsumerWidget {
     final content = ref.read(contentRepositoryProvider);
     final now = DateTime.now();
 
-    final newSrs = applySessionToSrs(
-      current: progress.srsByItem,
+    final rewards = applySessionRewards(
+      current: progress,
       itemCorrectness: s.itemCorrectness,
       now: now,
+      content: content,
     );
 
     final newLessons = {...progress.lessons};
@@ -122,29 +131,30 @@ class LessonRunnerScreen extends ConsumerWidget {
       lessonId: lesson.id,
       unlocked: true,
       completed: true,
-      completionCount:
-          (progress.lessons[lesson.id]?.completionCount ?? 0) + 1,
+      completionCount: (progress.lessons[lesson.id]?.completionCount ?? 0) + 1,
       completedAt: now,
     );
-    final allLessons = content.lessons;
-    final nextList = allLessons.where((l) => l.order == lesson.order + 1).toList();
+    final nextList =
+        content.lessons.where((l) => l.order == lesson.order + 1).toList();
     if (nextList.isNotEmpty && newLessons[nextList.first.id] == null) {
-      final next = nextList.first;
-      newLessons[next.id] = LessonProgress(
-        lessonId: next.id,
+      final nx = nextList.first;
+      newLessons[nx.id] = LessonProgress(
+        lessonId: nx.id,
         unlocked: true,
         completed: false,
         completionCount: 0,
       );
     }
 
-    await progressCtrl.update(
-      progress.copyWith(
-        lessons: newLessons,
-        srsByItem: newSrs,
-        earnedStickerIds: {...progress.earnedStickerIds, lesson.stickerId},
-        lastPlayed: now,
-      ),
+    final updated = rewards.progress.copyWith(
+      lessons: newLessons,
+      earnedStickerIds: {...progress.earnedStickerIds, lesson.stickerId},
+    );
+    await progressCtrl.update(updated);
+    return SessionRewards(
+      progress: updated,
+      newStarKeys: rewards.newStarKeys,
+      completedConstellations: rewards.completedConstellations,
     );
   }
 }

@@ -25,6 +25,15 @@ _$ProgressImpl _$$ProgressImplFromJson(Map<String, dynamic> json) =>
           ? null
           : DateTime.parse(json['lastWarmupAt'] as String),
       warmupCount: (json['warmupCount'] as num?)?.toInt() ?? 0,
+      skyStarItemKeys: (json['skyStarItemKeys'] as List<dynamic>?)
+              ?.map((e) => e as String)
+              .toList() ??
+          const <String>[],
+      completedConstellationIds:
+          (json['completedConstellationIds'] as List<dynamic>?)
+                  ?.map((e) => e as String)
+                  .toSet() ??
+              const <String>{},
     );
 
 Map<String, dynamic> _$$ProgressImplToJson(_$ProgressImpl instance) =>
@@ -37,4 +46,6 @@ Map<String, dynamic> _$$ProgressImplToJson(_$ProgressImpl instance) =>
       'volume': instance.volume,
       'lastWarmupAt': instance.lastWarmupAt?.toIso8601String(),
       'warmupCount': instance.warmupCount,
+      'skyStarItemKeys': instance.skyStarItemKeys,
+      'completedConstellationIds': instance.completedConstellationIds.toList(),
     };

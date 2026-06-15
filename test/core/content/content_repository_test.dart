@@ -17,6 +17,11 @@ void main() {
       expect(repo.letterById('letter_a').cyrillic, 'А');
       expect(repo.wordById('word_aav').text('en'), 'father');
       expect(repo.lessonByOrder(1).id, 'lesson_01');
+      expect(repo.constellations, hasLength(1));
+      expect(repo.constellations.first.id, 'doloon_burhan');
+      expect(repo.constellations.first.nameEn, 'The Big Dipper');
+      expect(repo.constellations.first.slots, hasLength(7));
+      expect(repo.constellations.first.shapeImage, 'assets/images/ladle.png');
     });
 
     test('throws on dangling sticker reference', () {
